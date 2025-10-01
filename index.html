@@ -8,22 +8,33 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
   <style>
     :root {
-      --purple-1: #3b1076;
-      --purple-2: #6b3bd6;
-      --purple-3: #9b6df0;
-      --purple-4: #b89dff;
-      --muted: #f3f3f7;
-      --card: #ffffff;
-      --radius: 14px;
-      --maxw: 1180px;
-      --glow: #a78bfa;
+      --purple-primary: #7c3aed;
+      --purple-light: #9b6df0;
+      --purple-dark: #6b3bd6;
+      --purple-subtle: #f3f0ff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.05);
+      --shadow-md: 0 4px 12px rgba(124, 58, 237, 0.08);
+      --shadow-lg: 0 12px 32px rgba(124, 58, 237, 0.1);
+      --shadow-xl: 0 20px 48px rgba(124, 58, 237, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --maxw: 1200px;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: #111;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     * {
@@ -33,132 +44,104 @@
     }
 
     body {
-      background: #fff;
+      background: var(--bg-primary);
+      color: var(--text-primary);
       overflow-x: hidden;
-      cursor: default;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    /* Loading Animation */
-    .page-loader {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeOut 0.6s ease-out 1.5s forwards;
-      pointer-events: none;
-    }
-
-    .loader-inner {
-      width: 60px;
-      height: 60px;
-      border: 3px solid rgba(255,255,255,0.2);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Header with Glassmorphism */
+    /* Header - Ultra Clean */
     .site-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      padding: 12px 20px;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding: 16px 0;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
       z-index: 999;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .site-header.scrolled {
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 10px 40px rgba(59, 16, 118, 0.08);
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.06);
     }
 
     .header-inner {
       max-width: var(--maxw);
       margin: 0 auto;
+      padding: 0 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .brand:hover {
-      transform: scale(1.05);
+      transform: translateY(-1px);
     }
 
     .logo img {
-      width: 42px;
-      transition: transform 0.3s ease;
+      width: 36px;
+      height: 36px;
+      transition: transform 0.4s ease;
     }
 
     .brand:hover .logo img {
-      transform: rotate(360deg);
+      transform: rotate(10deg) scale(1.05);
     }
 
     .brand small {
-      font-size: 34px;
+      font-size: 24px;
       font-weight: 600;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
     }
 
-    /* Navigation with Hover Effects */
     .main-nav {
       display: flex;
       align-items: center;
-      gap: 32px;
-      font-weight: 600;
+      gap: 40px;
     }
 
     .nav-link {
-      color: #333;
+      color: var(--text-secondary);
       text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
       position: relative;
-      transition: color 0.3s ease;
     }
 
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: -4px;
       left: 0;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
+      background: var(--purple-primary);
       transition: width 0.3s ease;
     }
 
     .nav-link:hover {
-      color: var(--purple-2);
+      color: var(--purple-primary);
     }
 
     .nav-link:hover::after {
@@ -166,150 +149,127 @@
     }
 
     .main-nav .btn {
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      color: #fff;
-      padding: 12px 28px;
+      background: var(--purple-primary);
+      color: white;
+      padding: 10px 24px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 600;
+      font-size: 14px;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
-    }
-
-    .main-nav .btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    .main-nav .btn:hover::before {
-      width: 300px;
-      height: 300px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .main-nav .btn:hover {
+      background: var(--purple-dark);
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(107, 59, 214, 0.3);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
     }
 
-    /* Hero Section with Interactive Cursor Effect */
+    /* Hero - Interactive Cursor Effect */
     .hero {
+      padding: 180px 32px 120px;
+      max-width: 1400px;
+      margin: 0 auto;
       position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 120px 20px 80px;
       overflow: hidden;
-      background: linear-gradient(135deg, #e8dff5 0%, #fce4ec 50%, #f3e5f5 100%);
     }
 
-    /* Interactive Purple Cloud that follows cursor */
     .hero-gradient {
       position: absolute;
       inset: 0;
       pointer-events: none;
+      overflow: hidden;
     }
 
     .hero-gradient::before {
       content: '';
       position: absolute;
-      width: 800px;
-      height: 800px;
-      top: calc(var(--mouse-y, 50%) - 400px);
-      left: calc(var(--mouse-x, 50%) - 400px);
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(167, 139, 250, 0.25) 25%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
-      filter: blur(80px);
+      width: 1000px;
+      height: 1000px;
+      top: calc(var(--mouse-y, 50%) - 500px);
+      left: calc(var(--mouse-x, 50%) - 500px);
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, rgba(155, 109, 240, 0.15) 25%, rgba(124, 58, 237, 0.08) 50%, transparent 70%);
+      filter: blur(120px);
       transition: none;
-      animation: waberEffect 4s ease-in-out infinite;
+      animation: waber 6s ease-in-out infinite;
     }
 
-    @keyframes waberEffect {
+    @keyframes waber {
       0%, 100% { 
         transform: scale(1) rotate(0deg);
+        filter: blur(120px);
       }
-      33% { 
-        transform: scale(1.1) rotate(120deg);
+      25% { 
+        transform: scale(1.15) rotate(90deg);
+        filter: blur(100px);
       }
-      66% { 
-        transform: scale(0.95) rotate(240deg);
+      50% { 
+        transform: scale(0.9) rotate(180deg);
+        filter: blur(140px);
       }
-    }
-
-    /* Floating Particles - removed or kept minimal */
-    .particles {
-      display: none;
-    }
-
-    /* Hero Content */
-    .hero__grid {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
+      75% { 
+        transform: scale(1.1) rotate(270deg);
+        filter: blur(110px);
+      }
     }
 
     .hero-content {
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 720px;
       text-align: center;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--purple-subtle);
+      color: var(--purple-primary);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease;
+      transition: all 0.3s ease;
+    }
+
+    .hero-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
     }
 
     .hero h1 {
-      font-size: clamp(40px, 7vw, 72px);
-      line-height: 1.2;
-      font-weight: 700;
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 1.1;
+      font-weight: 800;
       margin-bottom: 24px;
-      letter-spacing: -1px;
-      animation: fadeInUp 0.8s ease-out;
-      color: #1a1a2e;
+      letter-spacing: -2px;
+      color: var(--text-primary);
+      animation: fadeInUp 0.8s ease 0.1s backwards;
     }
 
     .hero h1 .highlight {
-      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #8b5cf6 100%);
+      background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       position: relative;
-      display: inline-block;
     }
 
-    .hero h1 .highlight::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), transparent, rgba(167, 139, 250, 0.6));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      background-size: 200% 200%;
-      animation: shimmer 3s ease-in-out infinite;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .hero__lead {
-      font-size: clamp(17px, 2vw, 20px);
+    .hero-lead {
+      font-size: 20px;
       line-height: 1.6;
+      color: var(--text-secondary);
       margin-bottom: 40px;
-      color: #6b7280;
-      animation: fadeInUp 0.8s ease-out 0.2s backwards;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
@@ -318,7 +278,7 @@
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
@@ -326,295 +286,324 @@
       }
     }
 
-    /* CTA Buttons with Magnetic Effect */
-    ._cta {
+    .hero-cta {
       display: flex;
       gap: 16px;
       justify-content: center;
       flex-wrap: wrap;
-      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+      animation: fadeInUp 0.8s ease 0.3s backwards;
+      margin-bottom: 48px;
     }
 
-    .hero .btn {
-      padding: 16px 40px;
+    .btn-primary {
+      background: var(--purple-primary);
+      color: white;
+      padding: 16px 32px;
       border-radius: 999px;
       font-weight: 600;
-      font-size: 17px;
+      font-size: 16px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: none;
-    }
-
-    .hero .btn:first-child {
-      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
-    }
-
-    .hero .btn:first-child:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4);
-    }
-
-    .hero .btn.ghost {
-      background: transparent;
-      border: 2px solid #d1d5db;
-      color: #6b7280;
-    }
-
-    .hero .btn.ghost:hover {
-      background: rgba(139, 92, 246, 0.05);
-      border-color: #a78bfa;
-      color: #7c3aed;
-      transform: translateY(-2px);
-    }
-
-    .btn span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn i {
-      margin-left: 8px;
-      transition: transform 0.3s ease;
-    }
-
-    .btn:hover i {
-      transform: translateX(4px);
-    }
-
-    /* Trust Badges */
-    .trust {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 48px;
-      animation: fadeInUp 0.8s ease-out 0.6s backwards;
-    }
-
-    .trust span {
-      display: flex;
-      align-items: center;
-      font-weight: 500;
-      color: #6b7280;
-    }
-
-    .trust span i {
-      margin-right: 8px;
-      color: #8b5cf6;
-    }
-
-    /* How it Works Section */
-    ._how_it_works {
-      padding: 100px 0;
-      background: linear-gradient(180deg, #f8fafb 0%, #fff 100%);
-      position: relative;
-    }
-
-    ._how_inner {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    ._how_title {
-      font-size: clamp(32px, 5vw, 48px);
-      text-align: center;
-      margin-bottom: 60px;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .how-row {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-
-    .timeline {
-      position: absolute;
-      top: 193px;
-      left: 10%;
-      right: 10%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
-      border-radius: 3px;
-      opacity: 0.2;
-    }
-
-    .step {
-      text-align: center;
-      opacity: 0;
-      animation: fadeInScale 0.6s ease-out forwards;
-    }
-
-    .step:nth-child(2) { animation-delay: 0.1s; }
-    .step:nth-child(3) { animation-delay: 0.2s; }
-    .step:nth-child(4) { animation-delay: 0.3s; }
-    .step:nth-child(5) { animation-delay: 0.4s; }
-
-    @keyframes fadeInScale {
-      from {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .step .media {
+      cursor: pointer;
       position: relative;
       overflow: hidden;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(107, 59, 214, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .step:hover .media {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.2);
-    }
-
-    .step .media img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    .step:hover .media img {
-      transform: scale(1.1);
-    }
-
-    .badge {
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      color: #fff;
-      width: 44px;
-      height: 44px;
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-primary:hover {
+      background: var(--purple-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--purple-primary);
+      color: var(--purple-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+    }
+
+    .trust-badges {
+      display: flex;
       justify-content: center;
-      font-weight: 700;
-      margin: 24px auto 16px;
-      box-shadow: 0 8px 24px rgba(107, 59, 214, 0.3);
+      gap: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.4s backwards;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
 
-    .step:hover .badge {
-      transform: rotate(360deg) scale(1.1);
-      box-shadow: 0 12px 32px rgba(107, 59, 214, 0.4);
+    .trust-badge:hover {
+      color: var(--purple-primary);
+      transform: translateY(-2px);
     }
 
-    .step h3 {
-      font-size: 22px;
-      margin-bottom: 12px;
-      color: var(--purple-1);
+    .trust-badge i {
+      color: var(--purple-primary);
+      font-size: 16px;
     }
 
-    .step p {
-      color: #666;
-      line-height: 1.6;
+    /* How it Works - Premium Cards with Enhanced Scroll */
+    .how-section {
+      padding: 120px 32px;
+      background: var(--bg-primary);
     }
 
-    /* NEW: Health Profile Section */
-    .health-profile-section {
-      padding: 100px 20px;
-      background: #f7f7f8;
-    }
-
-    .health-profile-inner {
+    .how-inner {
       max-width: var(--maxw);
       margin: 0 auto;
     }
 
-    .profile-title {
-      font-size: clamp(32px, 5vw, 48px);
+    .section-header {
       text-align: center;
-      margin-bottom: 60px;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 80px;
     }
 
-    .profile-overview {
+    .section-label {
+      color: var(--purple-primary);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
     }
 
-    .kit-image-wrapper {
-      position: relative;
-      padding: 40px;
-      background: var(--card);
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-      transition: all 0.4s ease;
-    }
-
-    .kit-image-wrapper:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
-    }
-
-    .kit-image-wrapper img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      max-height: 400px;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
-    .kit-image-wrapper:hover img {
-      transform: scale(1.05);
-    }
-
-    .info-box {
-      background: var(--card);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-      border: 1px solid #f0f0f0;
+    .step-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
 
-    .info-box::before {
+    .step-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple-primary), var(--purple-light));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
     }
 
-    .info-box h3 {
+    .step-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.03), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--purple-primary);
+    }
+
+    .step-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .step-card:hover::after {
+      opacity: 1;
+    }
+
+    .step-image {
+      width: 100%;
+      height: 200px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      margin-bottom: 24px;
+      transition: transform 0.4s ease;
+    }
+
+    .step-card:hover .step-image {
+      transform: scale(1.05);
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--purple-subtle);
+      color: var(--purple-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover .step-number {
+      background: var(--purple-primary);
+      color: white;
+      transform: rotate(360deg) scale(1.1);
+    }
+
+    .step-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .step-description {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Health Profile - Premium Layout */
+    .profile-section {
+      padding: 120px 32px;
+      background: var(--bg-secondary);
+    }
+
+    .profile-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-top: 64px;
+    }
+
+    .profile-visual {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 120px;
+      transition: all 0.4s ease;
+    }
+
+    .profile-visual:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
+    }
+
+    .profile-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .profile-visual:hover img {
+      transform: scale(1.03) rotate(1deg);
+    }
+
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .info-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .info-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--purple-primary);
+      transform: translateX(4px);
+    }
+
+    .info-card h3 {
       font-size: 24px;
       font-weight: 700;
-      color: var(--purple-1);
+      color: var(--text-primary);
       margin-bottom: 16px;
     }
 
-    .info-box > p {
-      font-size: 17px;
-      line-height: 1.8;
-      color: #666;
-      margin-bottom: 32px;
+    .info-card p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
     }
 
     .accordion-trigger {
@@ -623,61 +612,68 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(135deg, rgba(107, 59, 214, 0.05), rgba(155, 109, 240, 0.05));
-      border-radius: 12px;
-      transition: all 0.3s ease;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
-      margin-top: 24px;
+      border: 1px solid transparent;
     }
 
     .accordion-trigger:hover {
-      background: linear-gradient(135deg, rgba(107, 59, 214, 0.1), rgba(155, 109, 240, 0.1));
+      background: var(--purple-subtle);
+      border-color: var(--purple-primary);
+      transform: translateX(4px);
     }
 
     .accordion-trigger.active {
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      background: var(--purple-primary);
+      border-color: var(--purple-primary);
     }
 
     .accordion-trigger h4 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--purple-1);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
       margin: 0;
-      transition: color 0.3s ease;
+      transition: color 0.2s ease;
     }
 
     .accordion-trigger.active h4 {
-      color: #ffffff;
+      color: white;
     }
 
     .accordion-icon {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      background: var(--purple-2);
+      background: var(--purple-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .accordion-trigger.active .accordion-icon {
-      background: rgba(255, 255, 255, 0.2);
+      background: white;
       transform: rotate(180deg);
     }
 
     .accordion-icon svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       stroke: white;
       stroke-width: 3;
+      transition: stroke 0.2s ease;
+    }
+
+    .accordion-trigger.active .accordion-icon svg {
+      stroke: var(--purple-primary);
     }
 
     .accordion-content {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
-                  padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 0;
     }
 
@@ -686,7 +682,7 @@
       padding-top: 32px;
     }
 
-    .biomarker-grid {
+    .biomarkers-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 32px;
@@ -694,422 +690,453 @@
 
     .biomarker-category {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px);
     }
 
     .accordion-content.open .biomarker-category {
-      animation: fadeInUpMarkers 0.6s ease forwards;
+      animation: fadeInUp 0.4s ease forwards;
     }
 
-    .accordion-content.open .biomarker-category:nth-child(1) { animation-delay: 0.1s; }
-    .accordion-content.open .biomarker-category:nth-child(2) { animation-delay: 0.2s; }
-    .accordion-content.open .biomarker-category:nth-child(3) { animation-delay: 0.3s; }
-    .accordion-content.open .biomarker-category:nth-child(4) { animation-delay: 0.4s; }
-
-    @keyframes fadeInUpMarkers {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    .accordion-content.open .biomarker-category:nth-child(1) { animation-delay: 0.05s; }
+    .accordion-content.open .biomarker-category:nth-child(2) { animation-delay: 0.1s; }
+    .accordion-content.open .biomarker-category:nth-child(3) { animation-delay: 0.15s; }
+    .accordion-content.open .biomarker-category:nth-child(4) { animation-delay: 0.2s; }
 
     .category-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      color: var(--purple-1);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .category-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .category-icon svg {
-      width: 14px;
-      height: 14px;
-      stroke: white;
-      stroke-width: 2.5;
+      color: var(--text-primary);
+      margin-bottom: 16px;
     }
 
     .biomarker-list {
       list-style: none;
-      padding-left: 0;
+      padding: 0;
     }
 
     .biomarker-list li {
-      padding: 10px 0;
-      padding-left: 24px;
+      padding: 8px 0;
+      padding-left: 20px;
       position: relative;
-      color: #666;
-      font-size: 15px;
-      line-height: 1.6;
-      transition: color 0.3s ease;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+      transition: all 0.2s ease;
     }
 
     .biomarker-list li:hover {
-      color: var(--purple-2);
+      color: var(--purple-primary);
+      padding-left: 24px;
     }
 
     .biomarker-list li::before {
       content: '';
       position: absolute;
       left: 0;
-      top: 16px;
-      width: 6px;
-      height: 6px;
+      top: 14px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      background: var(--purple-3);
-      transition: all 0.3s ease;
+      background: var(--purple-primary);
+      transition: all 0.2s ease;
     }
 
     .biomarker-list li:hover::before {
-      width: 8px;
-      height: 8px;
-      top: 15px;
-      background: var(--purple-2);
+      width: 6px;
+      height: 6px;
+      top: 13px;
     }
 
-    /* Testimonials */
-    .testimonials {
-      padding: 100px 20px;
-      background: #fff;
+    /* Testimonials - Card Style */
+    .testimonials-section {
+      padding: 120px 32px;
+      background: var(--bg-primary);
     }
 
-    .test-grid {
+    .testimonials-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      max-width: var(--maxw);
-      margin: 0 auto;
+      gap: 32px;
+      margin-top: 64px;
     }
 
-    .test-card {
-      position: relative;
-      background-image: var(--bg);
-      background-size: cover;
-      background-position: center;
-      border-radius: 20px;
-      overflow: hidden;
-      min-height: 420px;
-      display: flex;
-      align-items: flex-end;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-      transition: all 0.4s ease;
-      cursor: pointer;
-    }
-
-    .test-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
-      transition: all 0.3s ease;
-    }
-
-    .test-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 25px 70px rgba(107, 59, 214, 0.25);
-    }
-
-    .test-card:hover::before {
-      background: linear-gradient(to top, rgba(107, 59, 214, 0.9) 0%, rgba(107, 59, 214, 0.3) 60%, transparent 100%);
-    }
-
-    .overlay {
-      position: relative;
-      z-index: 1;
-      padding: 30px;
-      color: #fff;
-    }
-
-    .stars {
-      font-size: 20px;
-      margin-bottom: 12px;
-      color: #ffffff;
-      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .quote {
-      font-size: 17px;
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
-    .author {
-      font-weight: 600;
-      opacity: 0.9;
-      transition: color 0.3s ease;
-    }
-
-    .test-card:hover .author {
-      color: #b89dff;
-    }
-
-    /* Comparison Section */
-    ._vitanua_unterschied {
-      padding: 100px 20px;
-      background: linear-gradient(180deg, #f8fafb, #fff);
-    }
-
-    ._vitanua_unterschied h2 {
-      font-size: clamp(32px, 5vw, 48px);
-      text-align: center;
-      margin-bottom: 60px;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .grid {
-      display: flex;
-      gap: 30px;
-      justify-content: center;
-      flex-wrap: wrap;
-      max-width: var(--maxw);
-      margin: 0 auto;
-    }
-
-    ._p_card {
-      background: #fff;
-      min-width: 320px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-      border: 1px solid #f0f0f0;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    ._p_card.featured {
-      border: 2px solid var(--purple-2);
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
-    }
-
-    ._p_card .head {
-      padding: 24px;
-      font-weight: 700;
-      font-size: 20px;
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      color: #fff;
-      text-align: center;
-    }
-
-    ._p_card .head.gray {
-      background: linear-gradient(135deg, #f6f7f8, #fafbfc);
-      color: #333;
-    }
-
-    .list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .list li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      transition: background 0.3s ease;
-    }
-
-    ._p_card.featured .list li:hover {
-      background: rgba(107, 59, 214, 0.05);
-    }
-
-    .status {
-      min-width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    .status.check {
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      box-shadow: 0 4px 12px rgba(107, 59, 214, 0.3);
-    }
-
-    .status.check:hover {
-      transform: rotate(360deg) scale(1.2);
-    }
-
-    .status.cross {
-      background: #f6f7f9;
-      border: 1px solid #e0e0e0;
-    }
-
-    .icon {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* Contact/Waitlist Section */
-    #kontakt {
-      padding: 100px 20px;
-    }
-
-    .section-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .waitlist {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      padding: 60px;
-      border-radius: 30px;
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      color: #fff;
+    .testimonial-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.3);
     }
 
-    .waitlist::before {
+    .testimonial-card::after {
       content: '';
       position: absolute;
       top: -50%;
       right: -50%;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-      animation: rotate 10s linear infinite;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.05), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--purple-primary);
+    }
+
+    .testimonial-card:hover::after {
+      opacity: 1;
+    }
+
+    .testimonial-stars {
+      color: #f59e0b;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--purple-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover .author-avatar {
+      border-color: var(--purple-primary);
+      transform: scale(1.1);
+    }
+
+    .author-info {
+      flex: 1;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    .author-role {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    /* Comparison - Clean Table */
+    .comparison-section {
+      padding: 120px 32px;
+      background: var(--bg-secondary);
+    }
+
+    .comparison-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .comparison-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .comparison-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .comparison-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .comparison-card.featured {
+      border: 2px solid var(--purple-primary);
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .comparison-card.featured:hover {
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .comparison-header {
+      padding: 24px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .comparison-card.featured .comparison-header {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      color: white;
+    }
+
+    .comparison-card:not(.featured) .comparison-header {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .comparison-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .comparison-features li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-primary);
+      transition: background 0.2s ease;
+    }
+
+    .comparison-card.featured .comparison-features li:hover {
+      background: var(--purple-subtle);
+    }
+
+    .feature-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--purple-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .comparison-features li:hover .feature-check {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .feature-check svg {
+      width: 12px;
+      height: 12px;
+      stroke: white;
+      stroke-width: 3;
+    }
+
+    .feature-cross {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .feature-cross svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--text-tertiary);
+      stroke-width: 2;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 120px 32px;
+      background: var(--bg-primary);
+    }
+
+    .cta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cta-wrapper {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
     }
 
     @keyframes rotate {
       to { transform: rotate(360deg); }
     }
 
-    .form-area {
+    .cta-content {
       flex: 1;
       position: relative;
       z-index: 1;
     }
 
-    .waitlist h3 {
+    .cta-wrapper h3 {
       font-size: clamp(32px, 4vw, 42px);
-      margin-bottom: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
     }
 
-    .waitlist p {
+    .cta-wrapper p {
+      font-size: 18px;
+      margin-bottom: 32px;
       opacity: 0.95;
-      margin-bottom: 30px;
     }
 
-    .left_right {
-      display: flex;
-      gap: 14px;
+    .cta-form {
+      max-width: 100%;
     }
 
-    .waitlist input {
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .cta-form input {
       width: 100%;
-      padding: 14px 20px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      font-size: 16px;
-      margin-bottom: 14px;
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.15);
       backdrop-filter: blur(10px);
+      color: white;
+      font-size: 15px;
       transition: all 0.3s ease;
     }
 
-    .waitlist input::placeholder {
+    .cta-form input::placeholder {
       color: rgba(255,255,255,0.7);
     }
 
-    .waitlist input:focus {
+    .cta-form input:focus {
       outline: none;
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.5);
-      transform: translateX(4px);
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
     }
 
-    .form-btn {
+    .cta-form button {
       width: 100%;
-      padding: 14px 20px;
-      border-radius: 999px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
       border: none;
-      background: #fff;
-      color: var(--purple-2);
+      background: white;
+      color: var(--purple-primary);
       font-weight: 700;
       font-size: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      margin-top: 12px;
     }
 
-    .form-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+    .cta-form button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
     }
 
-    .waitlist-aside {
+    .cta-note {
+      margin-top: 24px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .cta-visual {
       position: relative;
       z-index: 1;
+      flex-shrink: 0;
     }
 
-    .packshot {
-      max-width: 300px;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
-      animation: float 6s ease-in-out infinite;
+    .cta-visual img {
+      max-width: 280px;
+      height: auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+      animation: floatProduct 6s ease-in-out infinite;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+    @keyframes floatProduct {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
     }
 
     /* Footer */
     footer {
-      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
-      color: #fff;
-      padding: 40px 20px;
-      text-align: center;
+      padding: 64px 32px 32px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
     }
 
     .footer-inner {
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 6px 20px;
       text-align: center;
     }
 
     .footer-links {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       justify-content: center;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
     }
 
     .footer-links a {
-      color: #fff;
+      color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 600;
-      opacity: 0.9;
-      transition: all 0.3s ease;
-      position: relative;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
     }
 
     .footer-links a:hover {
-      opacity: 1;
+      color: var(--purple-primary);
       transform: translateY(-2px);
+    }
+
+    .footer-copyright {
+      color: var(--text-tertiary);
+      font-size: 14px;
     }
 
     /* Hamburger Menu */
@@ -1117,19 +1144,20 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
-      width: 28px;
-      height: 20px;
+      width: 24px;
+      height: 18px;
       background: none;
       border: none;
       cursor: pointer;
-      z-index: 1001;
+      padding: 0;
     }
 
     .hamburger span {
       display: block;
-      height: 3px;
-      background: var(--purple-2);
-      border-radius: 3px;
+      height: 2px;
+      width: 100%;
+      background: var(--text-primary);
+      border-radius: 2px;
       transition: all 0.3s ease;
     }
 
@@ -1145,28 +1173,89 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Scroll Reveal Animations */
+    /* Enhanced Scroll Reveal Animations */
     .scroll-reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease;
+      transform: translateY(60px) scale(0.95);
+      filter: blur(5px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .scroll-reveal.revealed {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    .scroll-reveal-left {
+      opacity: 0;
+      transform: translateX(-60px) rotate(-5deg);
+      filter: blur(3px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal-left.revealed {
+      opacity: 1;
+      transform: translateX(0) rotate(0deg);
+      filter: blur(0);
+    }
+
+    .scroll-reveal-right {
+      opacity: 0;
+      transform: translateX(60px) rotate(5deg);
+      filter: blur(3px);
+      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal-right.revealed {
+      opacity: 1;
+      transform: translateX(0) rotate(0deg);
+      filter: blur(0);
+    }
+
+    .scroll-reveal-zoom {
+      opacity: 0;
+      transform: scale(0.7);
+      filter: blur(10px);
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal-zoom.revealed {
+      opacity: 1;
+      transform: scale(1);
+      filter: blur(0);
     }
 
     /* Responsive */
     @media (max-width: 968px) {
-      .profile-overview {
+      .profile-grid {
         grid-template-columns: 1fr;
         gap: 40px;
       }
 
-      .biomarker-grid {
+      .profile-visual {
+        position: static;
+      }
+
+      .biomarkers-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+      }
+
+      .comparison-table {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison-card.featured {
+        transform: scale(1);
+      }
+
+      .cta-wrapper {
+        flex-direction: column;
+        padding: 48px 32px;
+      }
+
+      .cta-visual img {
+        max-width: 200px;
       }
     }
 
@@ -1178,126 +1267,46 @@
       .main-nav {
         display: none;
         position: fixed;
-        top: 70px;
+        top: 68px;
         left: 0;
         right: 0;
         background: rgba(255,255,255,0.98);
         backdrop-filter: blur(20px);
-        padding: 30px;
+        padding: 32px;
         flex-direction: column;
-        gap: 20px;
-        border-radius: 0 0 20px 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        gap: 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
       }
 
       .main-nav.show {
         display: flex;
       }
 
-      .hero h1 {
-        font-size: 36px;
+      .hero {
+        padding: 140px 24px 80px;
       }
 
-      .how-row {
+      .steps-grid {
         grid-template-columns: 1fr;
       }
 
-      .timeline {
-        display: none;
-      }
-
-      .test-grid {
+      .form-row {
         grid-template-columns: 1fr;
       }
-
-      .grid {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .waitlist {
-        flex-direction: column;
-        padding: 40px 30px;
-      }
-
-      .form-area {
-        width: 100%;
-      }
-
-      .packshot {
-        max-width: 200px;
-      }
-
-      .health-profile-section {
-        padding: 60px 20px;
-      }
-
-      .kit-image-wrapper {
-        padding: 24px;
-      }
-
-      .info-box {
-        padding: 24px;
-      }
-    }
-
-    /* Content Block */
-    ._content_block {
-      padding: 100px 20px;
-      background: #fff;
-    }
-
-    ._content_block h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      color: var(--purple-1);
-    }
-
-    ._content_block h2 {
-      font-size: 32px;
-      margin-bottom: 16px;
-      color: var(--purple-2);
-    }
-
-    ._content_block h3 {
-      font-size: 24px;
-      margin-bottom: 12px;
-      color: #333;
-    }
-
-    ._content_block p {
-      margin-bottom: 16px;
-      line-height: 1.6;
-      color: #666;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 5vw, 48px);
-      text-align: center;
-      margin-bottom: 60px;
-      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
   </style>
 </head>
 <body>
 
-<!-- Page Loader -->
-<div class="page-loader">
-  <div class="loader-inner"></div>
-</div>
-
 <header class="site-header" id="header">
   <div class="header-inner">
     <a href="index.html" class="brand">
       <div class="logo">
-        <img src="images/-09-24-at-2.15.png" alt="headerLogo">
+        <img src="images/-09-24-at-2.15.png" alt="Vitanua Logo">
       </div>
       <small>vitanua</small>
     </a>
-    <!-- Hamburger Button -->
     <button class="hamburger" id="hamburger">
       <span></span>
       <span></span>
@@ -1305,11 +1314,11 @@
     </button>
     <nav class="main-nav" id="mainNav">
       <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
-      <a href="#kits" class="nav-link">Test-Kits</a>
-      <a href="#_testimonials" class="nav-link">Erfahrungen</a>
+      <a href="#kits" class="nav-link">Gesundheitsprofil</a>
+      <a href="#testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
       <a href="#kontakt" class="btn">
-        <span>Jetzt vormerken <i class="fa-solid fa-chevron-right"></i></span>
+        Jetzt vormerken <i class="fa-solid fa-arrow-right"></i>
       </a>
     </nav>
   </div>
@@ -1317,175 +1326,165 @@
 
 <section class="hero" id="hero">
   <div class="hero-gradient"></div>
-  <div class="hero__grid">
-    <div class="hero-content">
-      <h1>Deine Gesundheit, <span class="highlight">individuell optimiert</span></h1>
-      <p class="hero__lead">Entdecke deine persönlichen Gesundheitsbedürfnisse mit wissenschaftlich fundierten Bluttests und maßgeschneiderten Nährstoff-Kits.</p>
-      <div class="_cta">
-        <a href="#kontakt" class="btn">
-          <span>Jetzt vormerken <i class="fa-solid fa-chevron-right"></i></span>
-        </a>
-        <a href="#so-funktionierts" class="btn ghost">
-          <span>Mehr erfahren</span>
-        </a>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fa-solid fa-sparkles"></i>
+      Personalisierte Health Intelligence
+    </div>
+    <h1>
+      Deine Gesundheit,<br>
+      <span class="highlight">individuell optimiert</span>
+    </h1>
+    <p class="hero-lead">
+      Entdecke deine persönlichen Gesundheitsbedürfnisse mit wissenschaftlich fundierten Bluttests und maßgeschneiderten Nährstoff-Kits.
+    </p>
+    <div class="hero-cta">
+      <a href="#kontakt" class="btn-primary">
+        Jetzt vormerken <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a href="#so-funktionierts" class="btn-secondary">
+        Mehr erfahren
+      </a>
+    </div>
+    <div class="trust-badges">
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Wissenschaftlich fundiert
       </div>
-      <div class="trust">
-        <span><i class="far fa-circle-check"></i>Wissenschaftlich fundiert</span>
-        <span><i class="far fa-circle-check"></i>Personalisierte Lösungen</span>
-        <span><i class="far fa-circle-check"></i>Premium Qualität</span>
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Personalisierte Lösungen
+      </div>
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Premium Qualität
       </div>
     </div>
   </div>
 </section>
 
-<!-- How it Works Section -->
-<section id="so-funktionierts" class="_how_it_works">
-  <div class="_how_inner">
-    <h1 class="_how_title">So funktioniert's</h1>
-    <div class="how-row">
-      <div class="timeline"></div>
-
-      <div class="step">
-        <div class="media"><img src="images/Step 1.png" alt="Testkit"></div>
-        <div class="badge">1</div>
-        <h3>Testkit</h3>
-        <p>Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.</p>
-      </div>
-
-      <div class="step">
-        <div class="media"><img src="images/new-images.jpg" alt="Fragebogen"></div>
-        <div class="badge">2</div>
-        <h3>Fragebogen</h3>
-        <p>In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.</p>
-      </div>
-
-      <div class="step">
-        <div class="media"><img src="images/Step 3png.png" alt="KI-Analyse"></div>
-        <div class="badge">3</div>
-        <h3>KI-Analyse</h3>
-        <p>Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.</p>
-      </div>
-
-      <div class="step">
-        <div class="media"><img src="images/imag-1-area.jpg" alt="Deine Supplements"></div>
-        <div class="badge">4</div>
-        <h3>Deine Supplements</h3>
-        <p>Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.</p>
-      </div>
+<section id="so-funktionierts" class="how-section">
+  <div class="how-inner">
+    <div class="section-header scroll-reveal-zoom">
+      <div class="section-label">Der Vitanua Prozess</div>
+      <h2 class="section-title">In 4 Schritten zu deiner optimalen Gesundheit</h2>
+      <p class="section-subtitle">
+        Ein wissenschaftlich fundierter Ansatz für personalisierte Gesundheit
+      </p>
     </div>
-  </div>
-</section>
-
-<!-- NEW: Health Profile Section (replaces old Test Kits) -->
-<section id="kits" class="health-profile-section">
-  <div class="health-profile-inner">
-    <h2 class="profile-title">Dein Gesundheitsprofil</h2>
-    
-    <div class="profile-overview">
-      <div class="kit-image-wrapper scroll-reveal">
-        <img src="images/9-24-at-2.14.png" alt="Vitanua Testkit" />
-      </div>
-
-      <div class="info-box scroll-reveal">
-        <h3>Dein Rundum-Bild</h3>
-        <p>
-          Durch das Vitanua Heimtestkit und einen ergänzenden Gesundheitsfragebogen 
-          entsteht ein Rundum-Bild über deine aktuelle Gesundheit. Einfach zuhause 
-          durchgeführt, wissenschaftlich ausgewertet, individuell für dich.
+    <div class="steps-grid">
+      <div class="step-card scroll-reveal">
+        <img src="images/Step 1.png" alt="Testkit" class="step-image">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Testkit</h3>
+        <p class="step-description">
+          Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.
         </p>
+      </div>
+      <div class="step-card scroll-reveal">
+        <img src="images/new-images.jpg" alt="Fragebogen" class="step-image">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Fragebogen</h3>
+        <p class="step-description">
+          In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.
+        </p>
+      </div>
+      <div class="step-card scroll-reveal">
+        <img src="images/Step 3png.png" alt="KI-Analyse" class="step-image">
+        <div class="step-number">3</div>
+        <h3 class="step-title">KI-Analyse</h3>
+        <p class="step-description">
+          Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.
+        </p>
+      </div>
+      <div class="step-card scroll-reveal">
+        <img src="images/imag-1-area.jpg" alt="Supplements" class="step-image">
+        <div class="step-number">4</div>
+        <h3 class="step-title">Deine Supplements</h3>
+        <p class="step-description">
+          Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Integrated Accordion -->
-        <div class="accordion-trigger" id="accordionTrigger">
-          <h4>Teste mit dem Vitanua Testkit 24 Biomarker</h4>
-          <div class="accordion-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+<section id="kits" class="profile-section">
+  <div class="profile-inner">
+    <div class="section-header scroll-reveal-zoom">
+      <div class="section-label">Dein Health Dashboard</div>
+      <h2 class="section-title">Dein Gesundheitsprofil</h2>
+      <p class="section-subtitle">
+        Kombiniere präzise Biomarker-Analyse mit umfassenden Gesundheitsdaten 
+        für ein komplettes Bild deiner Gesundheit
+      </p>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-visual scroll-reveal-left">
+        <img src="images/9-24-at-2.14.png" alt="Vitanua Testkit">
+      </div>
+      <div class="profile-content">
+        <div class="info-card scroll-reveal-right">
+          <h3>Dein Rundum-Bild</h3>
+          <p>
+            Durch das Vitanua Heimtestkit und einen ergänzenden Gesundheitsfragebogen 
+            entsteht ein Rundum-Bild über deine aktuelle Gesundheit. Einfach zuhause 
+            durchgeführt, wissenschaftlich ausgewertet, individuell für dich.
+          </p>
+          <div class="accordion-trigger" id="accordionTrigger">
+            <h4>Teste mit dem Vitanua Testkit 24 Biomarker</h4>
+            <div class="accordion-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
           </div>
-        </div>
-
-        <div class="accordion-content" id="accordionContent">
-          <div class="biomarker-grid">
-            <!-- Stoffwechsel & Herz-Kreislauf -->
-            <div class="biomarker-category">
-              <div class="category-title">
-                <div class="category-icon">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                Stoffwechsel & Herz-Kreislauf
+          <div class="accordion-content" id="accordionContent">
+            <div class="biomarkers-grid">
+              <div class="biomarker-category">
+                <div class="category-title">Stoffwechsel & Herz-Kreislauf</div>
+                <ul class="biomarker-list">
+                  <li>HbA1c (Langzeitblutzucker)</li>
+                  <li>Gesamtcholesterin</li>
+                  <li>LDL-Cholesterin</li>
+                  <li>HDL-Cholesterin</li>
+                  <li>Triglyzeride (Blutfette)</li>
+                  <li>Non-HDL-Cholesterin</li>
+                  <li>Harnsäure</li>
+                  <li>Homocystein</li>
+                </ul>
               </div>
-              <ul class="biomarker-list">
-                <li>HbA1c (Langzeitblutzucker)</li>
-                <li>Gesamtcholesterin</li>
-                <li>LDL-Cholesterin</li>
-                <li>HDL-Cholesterin</li>
-                <li>Triglyzeride (Blutfette)</li>
-                <li>Non-HDL-Cholesterin</li>
-                <li>Harnsäure</li>
-                <li>Homocystein</li>
-              </ul>
-            </div>
-
-            <!-- Vitamine & Mikronährstoffe -->
-            <div class="biomarker-category">
-              <div class="category-title">
-                <div class="category-icon">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                Vitamine & Mikronährstoffe
+              <div class="biomarker-category">
+                <div class="category-title">Vitamine & Mikronährstoffe</div>
+                <ul class="biomarker-list">
+                  <li>Vitamin D</li>
+                  <li>Vitamin B12</li>
+                  <li>Folat (Vitamin B9)</li>
+                  <li>Vitamin A</li>
+                  <li>Vitamin E</li>
+                </ul>
               </div>
-              <ul class="biomarker-list">
-                <li>Vitamin D</li>
-                <li>Vitamin B12</li>
-                <li>Folat (Vitamin B9)</li>
-                <li>Vitamin A</li>
-                <li>Vitamin E</li>
-              </ul>
-            </div>
-
-            <!-- Hormone & Stressregulation -->
-            <div class="biomarker-category">
-              <div class="category-title">
-                <div class="category-icon">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                Hormone & Stressregulation
+              <div class="biomarker-category">
+                <div class="category-title">Hormone & Stressregulation</div>
+                <ul class="biomarker-list">
+                  <li>Cortisol</li>
+                  <li>Testosteron</li>
+                  <li>Estradiol</li>
+                  <li>DHEA</li>
+                  <li>Progesteron</li>
+                  <li>TSH</li>
+                  <li>fT4</li>
+                </ul>
               </div>
-              <ul class="biomarker-list">
-                <li>Cortisol</li>
-                <li>Testosteron</li>
-                <li>Estradiol</li>
-                <li>DHEA</li>
-                <li>Progesteron</li>
-                <li>TSH</li>
-                <li>fT4</li>
-              </ul>
-            </div>
-
-            <!-- Entzündung & Immunität -->
-            <div class="biomarker-category">
-              <div class="category-title">
-                <div class="category-icon">
-                  <svg viewBox="0 0 24 24" fill="none">
-                    <path d="M12 2v20M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="12" cy="12" r="7" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                Entzündung & Immunität
+              <div class="biomarker-category">
+                <div class="category-title">Entzündung & Immunität</div>
+                <ul class="biomarker-list">
+                  <li>CRP (Entzündungsmarker)</li>
+                  <li>IgG</li>
+                  <li>IgA</li>
+                  <li>IgM</li>
+                </ul>
               </div>
-              <ul class="biomarker-list">
-                <li>CRP (Entzündungsmarker)</li>
-                <li>IgG</li>
-                <li>IgA</li>
-                <li>IgM</li>
-              </ul>
             </div>
           </div>
         </div>
@@ -1494,209 +1493,228 @@
   </div>
 </section>
 
-<!-- Testimonials -->
-<section id="_testimonials" class="testimonials">
-  <div class="_container">
-    <h2 class="section-title">Erfahrungsberichte</h2>
-    <div class="test-grid">
-      <article class="test-card scroll-reveal" style="--bg: url('images/testri1.jpeg')">
-        <div class="overlay">
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Ich war überrascht, wie einfach das Testkit zu benutzen war. Die Auswertung hat mir echt die Augen geöffnet."</p>
-          <p class="author">– Tobias, 29, Verifizierter Tester</p>
+<section id="testimonials" class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="section-header scroll-reveal-zoom">
+      <div class="section-label">Kundenstimmen</div>
+      <h2 class="section-title">Erfahrungsberichte</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Ich war überrascht, wie einfach das Testkit zu benutzen war. Die Auswertung hat mir echt die Augen geöffnet."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri1.jpeg" alt="Tobias" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Tobias, 29</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
         </div>
-      </article>
-      
-      <article class="test-card scroll-reveal" style="--bg: url('images/testri2.jpeg')">
-        <div class="overlay">
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Das Konzept überzeugt mich total. Statt ins Blaue Supplements zu nehmen, bekomme ich jetzt Empfehlungen."</p>
-          <p class="author">– Philipp, 34, Verifizierter Tester</p>
+      </div>
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Das Konzept überzeugt mich total. Statt ins Blaue Supplements zu nehmen, bekomme ich jetzt Empfehlungen."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri2.jpeg" alt="Philipp" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Philipp, 34</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
         </div>
-      </article>
-      
-      <article class="test-card scroll-reveal" style="--bg: url('images/testri3.jpeg')">
-        <div class="overlay">
-          <div class="stars">★★★★★</div>
-          <p class="quote">"Ich trainiere viel und hatte schon zig Produkte ausprobiert. Mit Vitanua habe ich ein Paket, das genau passt."</p>
-          <p class="author">– Markus, 41, Verifizierter Tester</p>
+      </div>
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Ich trainiere viel und hatte schon zig Produkte ausprobiert. Mit Vitanua habe ich ein Paket, das genau passt."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri3.jpeg" alt="Markus" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Markus, 41</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
         </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Comparison Section -->
-<section class="_vitanua_unterschied">
-  <div class="_container">
-    <h2>Der Vitanua Unterschied</h2>
-    <div class="grid" role="list">
-      <!-- Vitanua -->
-      <section class="_p_card featured scroll-reveal">
-        <div class="head">Vitanua</div>
-        <ul class="list">
+<section class="comparison-section">
+  <div class="comparison-inner">
+    <div class="section-header scroll-reveal-zoom">
+      <div class="section-label">Warum Vitanua</div>
+      <h2 class="section-title">Der Vitanua Unterschied</h2>
+      <p class="section-subtitle">
+        Personalisierte Health Intelligence statt Einheitslösung
+      </p>
+    </div>
+    <div class="comparison-table">
+      <div class="comparison-card featured scroll-reveal">
+        <div class="comparison-header">Vitanua</div>
+        <ul class="comparison-features">
           <li>
-            <div class="label">Personalisierte Analyse</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Wissenschaftlich fundiert</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Bluttest inklusive</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Bluttest inklusive</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Regelmäßige Anpassung</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Transparente Dosierung</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </li>
-        </ul>
-      </section>
-
-      <!-- Standard Supplements -->
-      <section class="_p_card scroll-reveal">
-        <div class="head gray">Standard Supplements</div>
-        <ul class="list">
-          <li>
-            <div class="label">Personalisierte Analyse</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </li>
-          <li>
-            <div class="label">Wissenschaftlich fundiert</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </li>
-          <li>
-            <div class="label">Bluttest inklusive</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </li>
-          <li>
-            <div class="label">Regelmäßige Anpassung</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </li>
-          <li>
-            <div class="label">Transparente Dosierung</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Transparente Dosierung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
         </ul>
-      </section>
-
-      <!-- Apotheke -->
-      <section class="_p_card scroll-reveal">
-        <div class="head gray">Apotheke</div>
-        <ul class="list">
+      </div>
+      <div class="comparison-card scroll-reveal">
+        <div class="comparison-header">Standard Supplements</div>
+        <ul class="comparison-features">
           <li>
-            <div class="label">Personalisierte Analyse</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Wissenschaftlich fundiert</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Bluttest inklusive</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Bluttest inklusive</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Regelmäßige Anpassung</div>
-            <div class="status cross">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
           <li>
-            <div class="label">Transparente Dosierung</div>
-            <div class="status check">
-              <svg class="icon" viewBox="0 0 24 24" fill="none">
-                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <span>Transparente Dosierung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </li>
         </ul>
-      </section>
+      </div>
+      <div class="comparison-card scroll-reveal">
+        <div class="comparison-header">Apotheke</div>
+        <ul class="comparison-features">
+          <li>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Bluttest inklusive</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Transparente Dosierung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Contact/Waitlist Section -->
-<section id="kontakt" class="_container">
-  <div class="section-inner">
-    <div class="waitlist scroll-reveal">
-      <div class="form-area">
+<section id="kontakt" class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-wrapper scroll-reveal-zoom">
+      <div class="cta-content">
         <h3>Sei unter den Ersten.</h3>
         <p>Trag dich ein und sichere dir den exklusiven Zugang zur Beta-Version & alle News zum Launch.</p>
-        <form id="waitlist-form">
-          <div class="left_right">
-            <input type="text" name="name" placeholder="Vorname" required />
-            <input type="text" name="lastname" placeholder="Nachname" required />
+        <form id="waitlist-form" class="cta-form">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Vorname" required>
+            <input type="text" name="lastname" placeholder="Nachname" required>
           </div>
-          <input type="email" name="email" placeholder="E-Mail-Adresse" required />
-          <button class="form-btn" type="submit">
+          <input type="email" name="email" placeholder="E-Mail-Adresse" required>
+          <button type="submit">
             Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
           </button>
         </form>
-        <p id="waitlist-success" style="display:none;margin-top:10px;font-weight:700">Danke! Du bist jetzt auf der Warteliste.</p>
-        <p class="small-area" style="font-size: 13px; margin-top: 24px; opacity: 0.9;">Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!</p>
+        <p id="waitlist-success" style="display:none;margin-top:16px;font-weight:600">✓ Danke! Du bist jetzt auf der Warteliste.</p>
+        <p class="cta-note">
+          Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!
+        </p>
       </div>
-      <div class="waitlist-aside">
-        <img src="images/paper-bag.png" alt="Packshot" class="packshot"/>
+      <div class="cta-visual">
+        <img src="images/paper-bag.png" alt="Vitanua Produkt">
       </div>
     </div>
   </div>
@@ -1709,13 +1727,13 @@
       <a href="impressum.html">Impressum</a>
       <a href="mailto:info@vitanua.de">Kontakt</a>
     </div>
-    <p>© 2025 Vitanua. Alle Rechte vorbehalten.</p>
+    <p class="footer-copyright">© 2025 Vitanua. Alle Rechte vorbehalten.</p>
   </div>
 </footer>
 
 <script>
-// Interactive Cursor Effect for Hero Section
 document.addEventListener('DOMContentLoaded', function() {
+  // Interactive Cursor Effect in Hero
   const hero = document.getElementById('hero');
   const heroGradient = hero.querySelector('.hero-gradient');
   
@@ -1738,8 +1756,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Scroll reveal animation
-  const revealElements = document.querySelectorAll('.scroll-reveal');
+  // Enhanced Scroll reveal animation
+  const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-zoom');
   
   const revealOnScroll = () => {
     revealElements.forEach(element => {
@@ -1771,7 +1789,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // NEW: Accordion functionality
+  // Accordion functionality
   const accordionTrigger = document.getElementById('accordionTrigger');
   const accordionContent = document.getElementById('accordionContent');
   let isOpen = false;
@@ -1788,7 +1806,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Form submission with Airtable
+  // Form submission
   document.getElementById("waitlist-form").addEventListener("submit", async function(e) {
     e.preventDefault();
 
@@ -1800,19 +1818,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const token = "pathtAAcf4KIAWM0l.425d91dde52af27196487ceb8cc2da2261e9d7c2f57c11a17644be3c3e6eaa48"; 
     const baseId = "appfe6f3nkTJchPql";  
     const tableName = "Waitlist";
-
     const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
 
     const data = {
-      records: [
-        {
-          fields: {
-            "Firstname": firstname,
-            "Lastname": lastname,
-            "Email": email
-          }
+      records: [{
+        fields: {
+          "Firstname": firstname,
+          "Lastname": lastname,
+          "Email": email
         }
-      ]
+      }]
     };
 
     try {
@@ -1834,15 +1849,15 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('waitlist-success').style.display = 'none';
         }, 5000);
       } else {
-        alert("Fehler: " + JSON.stringify(result));
+        alert("Fehler beim Eintragen. Bitte versuche es erneut.");
       }
     } catch (error) {
       console.error(error);
-      alert("Etwas ist schief gelaufen. Bitte erneut versuchen.");
+      alert("Netzwerkfehler. Bitte versuche es später erneut.");
     }
   });
 
-  // Smooth scroll for anchor links
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
