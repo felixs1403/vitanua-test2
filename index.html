@@ -528,13 +528,18 @@
       line-height: 1.6;
     }
 
-    /* Test Kits Section */
-    ._main_kit_area {
+    /* NEW: Health Profile Section */
+    .health-profile-section {
       padding: 100px 20px;
       background: #f7f7f8;
     }
 
-    .section-title {
+    .health-profile-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .profile-title {
       font-size: clamp(32px, 5vw, 48px);
       text-align: center;
       margin-bottom: 60px;
@@ -544,108 +549,234 @@
       background-clip: text;
     }
 
-    .kits {
+    .profile-overview {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      max-width: var(--maxw);
-      margin: 0 auto;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
     }
 
-    .kit {
-      background: #fff;
+    .kit-image-wrapper {
+      position: relative;
+      padding: 40px;
+      background: var(--card);
       border-radius: 20px;
-      padding: 32px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      transition: all 0.4s ease;
+    }
+
+    .kit-image-wrapper:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
+    }
+
+    .kit-image-wrapper img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      max-height: 400px;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .kit-image-wrapper:hover img {
+      transform: scale(1.05);
+    }
+
+    .info-box {
+      background: var(--card);
+      padding: 40px;
+      border-radius: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.06);
       border: 1px solid #f0f0f0;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
     }
 
-    .kit::before {
+    .info-box::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, var(--purple-3), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
     }
 
-    .kit:hover::before {
-      opacity: 0.1;
-    }
-
-    .kit:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
-      border-color: var(--purple-3);
-    }
-
-    .kit img {
-      height: 200px;
-      object-fit: contain;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    .kit:hover img {
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .kit h4 {
+    .info-box h3 {
       font-size: 24px;
-      margin-bottom: 8px;
+      font-weight: 700;
       color: var(--purple-1);
+      margin-bottom: 16px;
     }
 
-    .kit > p:first-of-type {
-      color: var(--purple-2);
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .kit ul {
-      list-style: none;
-      padding: 20px 0;
-      text-align: left;
-      max-width: 250px;
-      margin: 0 auto;
-    }
-
-    .kit ul li {
-      position: relative;
-      padding-left: 28px;
-      margin-bottom: 12px;
+    .info-box > p {
+      font-size: 17px;
+      line-height: 1.8;
       color: #666;
+      margin-bottom: 32px;
     }
 
-    .kit ul li::before {
-      content: "✓";
+    .accordion-trigger {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(107, 59, 214, 0.05), rgba(155, 109, 240, 0.05));
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      user-select: none;
+      margin-top: 24px;
+    }
+
+    .accordion-trigger:hover {
+      background: linear-gradient(135deg, rgba(107, 59, 214, 0.1), rgba(155, 109, 240, 0.1));
+    }
+
+    .accordion-trigger.active {
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+    }
+
+    .accordion-trigger h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--purple-1);
+      margin: 0;
+      transition: color 0.3s ease;
+    }
+
+    .accordion-trigger.active h4 {
+      color: #ffffff;
+    }
+
+    .accordion-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--purple-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s ease;
+    }
+
+    .accordion-trigger.active .accordion-icon {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(180deg);
+    }
+
+    .accordion-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 3;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                  padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0;
+    }
+
+    .accordion-content.open {
+      max-height: 2000px;
+      padding-top: 32px;
+    }
+
+    .biomarker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .biomarker-category {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .accordion-content.open .biomarker-category {
+      animation: fadeInUpMarkers 0.6s ease forwards;
+    }
+
+    .accordion-content.open .biomarker-category:nth-child(1) { animation-delay: 0.1s; }
+    .accordion-content.open .biomarker-category:nth-child(2) { animation-delay: 0.2s; }
+    .accordion-content.open .biomarker-category:nth-child(3) { animation-delay: 0.3s; }
+    .accordion-content.open .biomarker-category:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUpMarkers {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--purple-1);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .category-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      stroke-width: 2.5;
+    }
+
+    .biomarker-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .biomarker-list li {
+      padding: 10px 0;
+      padding-left: 24px;
+      position: relative;
+      color: #666;
+      font-size: 15px;
+      line-height: 1.6;
+      transition: color 0.3s ease;
+    }
+
+    .biomarker-list li:hover {
+      color: var(--purple-2);
+    }
+
+    .biomarker-list li::before {
+      content: '';
       position: absolute;
       left: 0;
-      color: #8b5cf6;
-      font-weight: bold;
-      font-size: 18px;
+      top: 16px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--purple-3);
+      transition: all 0.3s ease;
     }
 
-    ._labl_ghost {
-      background: linear-gradient(135deg, #f4f2f2, #fff);
-      border: 2px solid #e0e0e0;
-      color: #999;
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: not-allowed;
-      transition: all 0.3s ease;
+    .biomarker-list li:hover::before {
+      width: 8px;
+      height: 8px;
+      top: 15px;
+      background: var(--purple-2);
     }
 
     /* Testimonials */
@@ -1027,6 +1158,18 @@
     }
 
     /* Responsive */
+    @media (max-width: 968px) {
+      .profile-overview {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .biomarker-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
     @media (max-width: 768px) {
       .hamburger {
         display: flex;
@@ -1063,10 +1206,6 @@
         display: none;
       }
 
-      .kits {
-        grid-template-columns: 1fr;
-      }
-
       .test-grid {
         grid-template-columns: 1fr;
       }
@@ -1087,6 +1226,18 @@
 
       .packshot {
         max-width: 200px;
+      }
+
+      .health-profile-section {
+        padding: 60px 20px;
+      }
+
+      .kit-image-wrapper {
+        padding: 24px;
+      }
+
+      .info-box {
+        padding: 24px;
       }
     }
 
@@ -1118,6 +1269,16 @@
       margin-bottom: 16px;
       line-height: 1.6;
       color: #666;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
   </style>
 </head>
@@ -1215,49 +1376,119 @@
   </div>
 </section>
 
-<!-- Test Kits Section -->
-<section id="kits" class="_main_kit_area">
-  <div class="_container">
-    <h2 class="section-title">Wähle dein Test-Kit</h2>
-    <div class="kits">
-      <div class="kit scroll-reveal">
-        <img src="images/9-24-at-2.14.png" alt="Basisprofil">
-        <h4>Basisprofil</h4>
-        <p>Die Grundlage</p>
-        <p>Umfassende Analyse der wichtigsten Biomarker für deinen Gesundheitsüberblick.</p>
-        <ul>
-          <li>Vitamine & Mineralstoffe</li>
-          <li>Entzündungsmarker</li>
-          <li>Stoffwechsel</li>
-          <li>Grundlegende Hormone</li>
-        </ul>
-        <button class="_labl_ghost">Bald verfügbar</button>
+<!-- NEW: Health Profile Section (replaces old Test Kits) -->
+<section id="kits" class="health-profile-section">
+  <div class="health-profile-inner">
+    <h2 class="profile-title">Dein Gesundheitsprofil</h2>
+    
+    <div class="profile-overview">
+      <div class="kit-image-wrapper scroll-reveal">
+        <img src="images/9-24-at-2.14.png" alt="Vitanua Testkit" />
       </div>
-      <div class="kit scroll-reveal">
-        <img src="images/Image-2025-09-24-at-2.14.png" alt="Performance">
-        <h4>Performance</h4>
-        <p>Für Höchstleistung</p>
-        <p>Spezialisiert auf Sportler und leistungsorientierte Menschen.</p>
-        <ul>
-          <li>Erweiterte Hormone</li>
-          <li>Muskelstoffwechsel</li>
-          <li>Regeneration</li>
-          <li>Energiestoffwechsel</li>
-        </ul>
-        <button class="_labl_ghost">Bald verfügbar</button>
-      </div>
-      <div class="kit scroll-reveal">
-        <img src="images/-09-24-at-2.14.png" alt="Balance">
-        <h4>Balance</h4>
-        <p>Innere Ruhe</p>
-        <p>Fokus auf mentale Gesundheit und hormonelle Balance.</p>
-        <ul>
-          <li>Stresshormone</li>
-          <li>Neurotransmitter</li>
-          <li>Schlafqualität</li>
-          <li>Adapogene</li>
-        </ul>
-        <button class="_labl_ghost">Bald verfügbar</button>
+
+      <div class="info-box scroll-reveal">
+        <h3>Dein Rundum-Bild</h3>
+        <p>
+          Durch das Vitanua Heimtestkit und einen ergänzenden Gesundheitsfragebogen 
+          entsteht ein Rundum-Bild über deine aktuelle Gesundheit. Einfach zuhause 
+          durchgeführt, wissenschaftlich ausgewertet, individuell für dich.
+        </p>
+
+        <!-- Integrated Accordion -->
+        <div class="accordion-trigger" id="accordionTrigger">
+          <h4>Teste mit dem Vitanua Testkit 24 Biomarker</h4>
+          <div class="accordion-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="accordion-content" id="accordionContent">
+          <div class="biomarker-grid">
+            <!-- Stoffwechsel & Herz-Kreislauf -->
+            <div class="biomarker-category">
+              <div class="category-title">
+                <div class="category-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                Stoffwechsel & Herz-Kreislauf
+              </div>
+              <ul class="biomarker-list">
+                <li>HbA1c (Langzeitblutzucker)</li>
+                <li>Gesamtcholesterin</li>
+                <li>LDL-Cholesterin</li>
+                <li>HDL-Cholesterin</li>
+                <li>Triglyzeride (Blutfette)</li>
+                <li>Non-HDL-Cholesterin</li>
+                <li>Harnsäure</li>
+                <li>Homocystein</li>
+              </ul>
+            </div>
+
+            <!-- Vitamine & Mikronährstoffe -->
+            <div class="biomarker-category">
+              <div class="category-title">
+                <div class="category-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                Vitamine & Mikronährstoffe
+              </div>
+              <ul class="biomarker-list">
+                <li>Vitamin D</li>
+                <li>Vitamin B12</li>
+                <li>Folat (Vitamin B9)</li>
+                <li>Vitamin A</li>
+                <li>Vitamin E</li>
+              </ul>
+            </div>
+
+            <!-- Hormone & Stressregulation -->
+            <div class="biomarker-category">
+              <div class="category-title">
+                <div class="category-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                Hormone & Stressregulation
+              </div>
+              <ul class="biomarker-list">
+                <li>Cortisol</li>
+                <li>Testosteron</li>
+                <li>Estradiol</li>
+                <li>DHEA</li>
+                <li>Progesteron</li>
+                <li>TSH</li>
+                <li>fT4</li>
+              </ul>
+            </div>
+
+            <!-- Entzündung & Immunität -->
+            <div class="biomarker-category">
+              <div class="category-title">
+                <div class="category-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2v20M2 12h20" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                Entzündung & Immunität
+              </div>
+              <ul class="biomarker-list">
+                <li>CRP (Entzündungsmarker)</li>
+                <li>IgG</li>
+                <li>IgA</li>
+                <li>IgM</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1493,7 +1724,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Direct update without any delay for instant response
     heroGradient.style.setProperty('--mouse-x', `${x}px`);
     heroGradient.style.setProperty('--mouse-y', `${y}px`);
   });
@@ -1523,7 +1753,7 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   
   window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll(); // Initial check
+  revealOnScroll();
 
   // Hamburger menu
   const hamburger = document.getElementById('hamburger');
@@ -1534,12 +1764,28 @@ document.addEventListener('DOMContentLoaded', function() {
     mainNav.classList.toggle('show');
   });
 
-  // Close menu when clicking a link
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('active');
       mainNav.classList.remove('show');
     });
+  });
+
+  // NEW: Accordion functionality
+  const accordionTrigger = document.getElementById('accordionTrigger');
+  const accordionContent = document.getElementById('accordionContent');
+  let isOpen = false;
+
+  accordionTrigger.addEventListener('click', function() {
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      accordionTrigger.classList.add('active');
+      accordionContent.classList.add('open');
+    } else {
+      accordionTrigger.classList.remove('active');
+      accordionContent.classList.remove('open');
+    }
   });
 
   // Form submission with Airtable
