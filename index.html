@@ -4,25 +4,1137 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vitanua — Personalisierte Gesundheit</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <!-- AOS CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    :root {
+      --purple-1: #3b1076;
+      --purple-2: #6b3bd6;
+      --purple-3: #9b6df0;
+      --purple-4: #b89dff;
+      --muted: #f3f3f7;
+      --card: #ffffff;
+      --radius: 14px;
+      --maxw: 1180px;
+      --glow: #a78bfa;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #111;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fff;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Loading Animation */
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeOut 0.6s ease-out 1.5s forwards;
+      pointer-events: none;
+    }
+
+    .loader-inner {
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Header with Glassmorphism */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 10px 40px rgba(59, 16, 118, 0.08);
+    }
+
+    .header-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      width: 42px;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover .logo img {
+      transform: rotate(360deg);
+    }
+
+    .brand small {
+      font-size: 34px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Navigation with Hover Effects */
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      font-weight: 600;
+    }
+
+    .nav-link {
+      color: #333;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--purple-2);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .main-nav .btn {
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .main-nav .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .main-nav .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .main-nav .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(107, 59, 214, 0.3);
+    }
+
+    /* Hero Section with Interactive Cursor Effect */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 80px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8dff5 0%, #fce4ec 50%, #f3e5f5 100%);
+    }
+
+    /* Interactive Purple Cloud that follows cursor */
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-gradient::before {
+      content: '';
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      top: calc(var(--mouse-y, 50%) - 400px);
+      left: calc(var(--mouse-x, 50%) - 400px);
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(167, 139, 250, 0.25) 25%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
+      filter: blur(80px);
+      transition: none;
+      animation: waberEffect 4s ease-in-out infinite;
+    }
+
+    @keyframes waberEffect {
+      0%, 100% { 
+        transform: scale(1) rotate(0deg);
+      }
+      33% { 
+        transform: scale(1.1) rotate(120deg);
+      }
+      66% { 
+        transform: scale(0.95) rotate(240deg);
+      }
+    }
+
+    /* Floating Particles - removed or kept minimal */
+    .particles {
+      display: none;
+    }
+
+    /* Hero Content */
+    .hero__grid {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.2;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+      animation: fadeInUp 0.8s ease-out;
+      color: #1a1a2e;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero h1 .highlight::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), transparent, rgba(167, 139, 250, 0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: shimmer 3s ease-in-out infinite;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .hero__lead {
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      color: #6b7280;
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* CTA Buttons with Magnetic Effect */
+    ._cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+
+    .hero .btn {
+      padding: 16px 40px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 17px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: none;
+    }
+
+    .hero .btn:first-child {
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .hero .btn:first-child:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4);
+    }
+
+    .hero .btn.ghost {
+      background: transparent;
+      border: 2px solid #d1d5db;
+      color: #6b7280;
+    }
+
+    .hero .btn.ghost:hover {
+      background: rgba(139, 92, 246, 0.05);
+      border-color: #a78bfa;
+      color: #7c3aed;
+      transform: translateY(-2px);
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn i {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover i {
+      transform: translateX(4px);
+    }
+
+    /* Trust Badges */
+    .trust {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 48px;
+      animation: fadeInUp 0.8s ease-out 0.6s backwards;
+    }
+
+    .trust span {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #6b7280;
+    }
+
+    .trust span i {
+      margin-right: 8px;
+      color: #8b5cf6;
+    }
+
+    /* How it Works Section */
+    ._how_it_works {
+      padding: 100px 0;
+      background: linear-gradient(180deg, #f8fafb 0%, #fff 100%);
+      position: relative;
+    }
+
+    ._how_inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    ._how_title {
+      font-size: clamp(32px, 5vw, 48px);
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .how-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .timeline {
+      position: absolute;
+      top: 193px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple-2), var(--purple-3));
+      border-radius: 3px;
+      opacity: 0.2;
+    }
+
+    .step {
+      text-align: center;
+      opacity: 0;
+      animation: fadeInScale 0.6s ease-out forwards;
+    }
+
+    .step:nth-child(2) { animation-delay: 0.1s; }
+    .step:nth-child(3) { animation-delay: 0.2s; }
+    .step:nth-child(4) { animation-delay: 0.3s; }
+    .step:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .step .media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(107, 59, 214, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .step:hover .media {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.2);
+    }
+
+    .step .media img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .step:hover .media img {
+      transform: scale(1.1);
+    }
+
+    .badge {
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 24px auto 16px;
+      box-shadow: 0 8px 24px rgba(107, 59, 214, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .step:hover .badge {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 12px 32px rgba(107, 59, 214, 0.4);
+    }
+
+    .step h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: var(--purple-1);
+    }
+
+    .step p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Test Kits Section */
+    ._main_kit_area {
+      padding: 100px 20px;
+      background: #f7f7f8;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .kits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .kit {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      border: 1px solid #f0f0f0;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kit::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--purple-3), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .kit:hover::before {
+      opacity: 0.1;
+    }
+
+    .kit:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
+      border-color: var(--purple-3);
+    }
+
+    .kit img {
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .kit:hover img {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .kit h4 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--purple-1);
+    }
+
+    .kit > p:first-of-type {
+      color: var(--purple-2);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .kit ul {
+      list-style: none;
+      padding: 20px 0;
+      text-align: left;
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    .kit ul li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 12px;
+      color: #666;
+    }
+
+    .kit ul li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #8b5cf6;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    ._labl_ghost {
+      background: linear-gradient(135deg, #f4f2f2, #fff);
+      border: 2px solid #e0e0e0;
+      color: #999;
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: all 0.3s ease;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 100px 20px;
+      background: #fff;
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .test-card {
+      position: relative;
+      background-image: var(--bg);
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      overflow: hidden;
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .test-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+      transition: all 0.3s ease;
+    }
+
+    .test-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 70px rgba(107, 59, 214, 0.25);
+    }
+
+    .test-card:hover::before {
+      background: linear-gradient(to top, rgba(107, 59, 214, 0.9) 0%, rgba(107, 59, 214, 0.3) 60%, transparent 100%);
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 1;
+      padding: 30px;
+      color: #fff;
+    }
+
+    .stars {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .quote {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .author {
+      font-weight: 600;
+      opacity: 0.9;
+      transition: color 0.3s ease;
+    }
+
+    .test-card:hover .author {
+      color: #b89dff;
+    }
+
+    /* Comparison Section */
+    ._vitanua_unterschied {
+      padding: 100px 20px;
+      background: linear-gradient(180deg, #f8fafb, #fff);
+    }
+
+    ._vitanua_unterschied h2 {
+      font-size: clamp(32px, 5vw, 48px);
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grid {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    ._p_card {
+      background: #fff;
+      min-width: 320px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      border: 1px solid #f0f0f0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    ._p_card.featured {
+      border: 2px solid var(--purple-2);
+      transform: translateY(-10px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.15);
+    }
+
+    ._p_card .head {
+      padding: 24px;
+      font-weight: 700;
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      color: #fff;
+      text-align: center;
+    }
+
+    ._p_card .head.gray {
+      background: linear-gradient(135deg, #f6f7f8, #fafbfc);
+      color: #333;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      transition: background 0.3s ease;
+    }
+
+    ._p_card.featured .list li:hover {
+      background: rgba(107, 59, 214, 0.05);
+    }
+
+    .status {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .status.check {
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      box-shadow: 0 4px 12px rgba(107, 59, 214, 0.3);
+    }
+
+    .status.check:hover {
+      transform: rotate(360deg) scale(1.2);
+    }
+
+    .status.cross {
+      background: #f6f7f9;
+      border: 1px solid #e0e0e0;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Contact/Waitlist Section */
+    #kontakt {
+      padding: 100px 20px;
+    }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .waitlist {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      padding: 60px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.3);
+    }
+
+    .waitlist::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+      animation: rotate 10s linear infinite;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .form-area {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .waitlist h3 {
+      font-size: clamp(32px, 4vw, 42px);
+      margin-bottom: 20px;
+    }
+
+    .waitlist p {
+      opacity: 0.95;
+      margin-bottom: 30px;
+    }
+
+    .left_right {
+      display: flex;
+      gap: 14px;
+    }
+
+    .waitlist input {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .waitlist input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .waitlist input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateX(4px);
+    }
+
+    .form-btn {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: none;
+      background: #fff;
+      color: var(--purple-2);
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+    }
+
+    .waitlist-aside {
+      position: relative;
+      z-index: 1;
+    }
+
+    .packshot {
+      max-width: 300px;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--purple-2), var(--purple-3));
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 6px 20px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 3px;
+      background: var(--purple-2);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Scroll Reveal Animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .main-nav {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        padding: 30px;
+        flex-direction: column;
+        gap: 20px;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      }
+
+      .main-nav.show {
+        display: flex;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .how-row {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        display: none;
+      }
+
+      .kits {
+        grid-template-columns: 1fr;
+      }
+
+      .test-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .waitlist {
+        flex-direction: column;
+        padding: 40px 30px;
+      }
+
+      .form-area {
+        width: 100%;
+      }
+
+      .packshot {
+        max-width: 200px;
+      }
+    }
+
+    /* Content Block */
+    ._content_block {
+      padding: 100px 20px;
+      background: #fff;
+    }
+
+    ._content_block h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: var(--purple-1);
+    }
+
+    ._content_block h2 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      color: var(--purple-2);
+    }
+
+    ._content_block h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    ._content_block p {
+      margin-bottom: 16px;
+      line-height: 1.6;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
+<!-- Page Loader -->
+<div class="page-loader">
+  <div class="loader-inner"></div>
+</div>
+
+<header class="site-header" id="header">
   <div class="header-inner">
-    <a href="index.html">
-      <div class="brand">
-        <div class="logo">
-          <img src="images/-09-24-at-2.15.png" alt="headerLogo">
-        </div>
-        <small class="muted">vitanua</small>
+    <a href="index.html" class="brand">
+      <div class="logo">
+        <img src="images/-09-24-at-2.15.png" alt="headerLogo">
       </div>
+      <small>vitanua</small>
     </a>
     <!-- Hamburger Button -->
     <button class="hamburger" id="hamburger">
@@ -30,79 +1142,85 @@
       <span></span>
       <span></span>
     </button>
-    <nav class="main-nav muted" id="mainNav">
+    <nav class="main-nav" id="mainNav">
       <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
       <a href="#kits" class="nav-link">Test-Kits</a>
       <a href="#_testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
-      <a href="#kontakt" class="btn" id="open-waitlist">Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+      <a href="#kontakt" class="btn">
+        <span>Jetzt vormerken <i class="fa-solid fa-chevron-right"></i></span>
       </a>
     </nav>
   </div>
 </header>
 
-
-<section class="hero">
-  <div class="hero__bg">
-    <!-- Particles Background -->
-    <div id="tsparticles"></div>
-  </div>
+<section class="hero" id="hero">
+  <div class="hero-gradient"></div>
   <div class="hero__grid">
     <div class="hero-content">
-      <h1 data-aos="fade-up" data-aos-delay="0">Personalisierte Gesundheit. Messbar. Individuell. Präventiv.</h1>
-      <p class="lead hero__lead" data-aos="fade-up" data-aos-delay="150">Wissenschaftlich fundierte Blutanalysen und maßgeschneiderte Supplement-Empfehlungen für deine optimale Gesundheit.</p>
-      <div class="_cta" data-aos="fade-up" data-aos-delay="300">
-        <a href="#kontakt" class="btn" id="open-waitlist">Frühen Zugang sichern <i class="fa-solid fa-chevron-right"></i></a>
-        <a href="#so-funktionierts" class="btn ghost">So funktioniert's</a>
+      <h1>Deine Gesundheit, <span class="highlight">individuell optimiert</span></h1>
+      <p class="hero__lead">Entdecke deine persönlichen Gesundheitsbedürfnisse mit wissenschaftlich fundierten Bluttests und maßgeschneiderten Nährstoff-Kits.</p>
+      <div class="_cta">
+        <a href="#kontakt" class="btn">
+          <span>Jetzt vormerken <i class="fa-solid fa-chevron-right"></i></span>
+        </a>
+        <a href="#so-funktionierts" class="btn ghost">
+          <span>Mehr erfahren</span>
+        </a>
       </div>
-      <div class="trust" aria-hidden="true" data-aos="fade-up" data-aos-delay="500">
-        <span><i class="far fa-circle-check"></i>Datengestützt</span>
-        <span><i class="far fa-circle-check"></i>Laborgeprüft</span>
-        <span><i class="far fa-circle-check"></i>Made in DACH</span>
+      <div class="trust">
+        <span><i class="far fa-circle-check"></i>Wissenschaftlich fundiert</span>
+        <span><i class="far fa-circle-check"></i>Personalisierte Lösungen</span>
+        <span><i class="far fa-circle-check"></i>Premium Qualität</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MAIN SECTION (STEPs) -->
+<!-- How it Works Section -->
 <section id="so-funktionierts" class="_how_it_works">
-  <div class="_how_inner _container">
+  <div class="_how_inner">
     <h1 class="_how_title">So funktioniert's</h1>
     <div class="how-row">
-      <div class="timeline" aria-hidden="true"></div>
+      <div class="timeline"></div>
 
-      <div class="step" data-aos="fade-up" data-aos-delay="0">
+      <div class="step">
         <div class="media"><img src="images/Step 1.png" alt="Testkit"></div>
         <div class="badge">1</div>
-        <div class="text"><h3>Testkit</h3><p>Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.</p></div>
+        <h3>Testkit</h3>
+        <p>Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.</p>
       </div>
 
-      <div class="step" data-aos="fade-up" data-aos-delay="150">
+      <div class="step">
         <div class="media"><img src="images/new-images.jpg" alt="Fragebogen"></div>
         <div class="badge">2</div>
-        <div class="text"><h3>Fragebogen</h3><p>In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.</p></div>
+        <h3>Fragebogen</h3>
+        <p>In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.</p>
       </div>
 
-      <div class="step" data-aos="fade-up" data-aos-delay="300">
+      <div class="step">
         <div class="media"><img src="images/Step 3png.png" alt="KI-Analyse"></div>
         <div class="badge">3</div>
-        <div class="text"><h3>KI-Analyse</h3><p>Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.</p></div>
+        <h3>KI-Analyse</h3>
+        <p>Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.</p>
       </div>
 
-      <div class="step" data-aos="fade-up" data-aos-delay="500">
+      <div class="step">
         <div class="media"><img src="images/imag-1-area.jpg" alt="Deine Supplements"></div>
         <div class="badge">4</div>
-        <div class="text"><h3>Deine Supplements</h3><p>Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.</p></div>
+        <h3>Deine Supplements</h3>
+        <p>Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Test Kits Section -->
 <section id="kits" class="_main_kit_area">
   <div class="_container">
     <h2 class="section-title">Wähle dein Test-Kit</h2>
     <div class="kits">
-      <div class="kit" data-aos="fade-up" data-aos-delay="0">
+      <div class="kit scroll-reveal">
         <img src="images/9-24-at-2.14.png" alt="Basisprofil">
         <h4>Basisprofil</h4>
         <p>Die Grundlage</p>
@@ -115,7 +1233,7 @@
         </ul>
         <button class="_labl_ghost">Bald verfügbar</button>
       </div>
-      <div class="kit" data-aos="fade-up" data-aos-delay="150">
+      <div class="kit scroll-reveal">
         <img src="images/Image-2025-09-24-at-2.14.png" alt="Performance">
         <h4>Performance</h4>
         <p>Für Höchstleistung</p>
@@ -128,7 +1246,7 @@
         </ul>
         <button class="_labl_ghost">Bald verfügbar</button>
       </div>
-      <div class="kit" data-aos="fade-up" data-aos-delay="300">
+      <div class="kit scroll-reveal">
         <img src="images/-09-24-at-2.14.png" alt="Balance">
         <h4>Balance</h4>
         <p>Innere Ruhe</p>
@@ -145,13 +1263,12 @@
   </div>
 </section>
 
-
-<!-- Testimonials: one row, three cards -->
+<!-- Testimonials -->
 <section id="_testimonials" class="testimonials">
   <div class="_container">
     <h2 class="section-title">Erfahrungsberichte</h2>
     <div class="test-grid">
-      <article class="test-card" style="--bg: url('images/testri1.jpeg')" data-aos="fade-up" data-aos-delay="0">
+      <article class="test-card scroll-reveal" style="--bg: url('images/testri1.jpeg')">
         <div class="overlay">
           <div class="stars">★★★★★</div>
           <p class="quote">"Ich war überrascht, wie einfach das Testkit zu benutzen war. Die Auswertung hat mir echt die Augen geöffnet."</p>
@@ -159,7 +1276,7 @@
         </div>
       </article>
       
-      <article class="test-card" style="--bg: url('images/testri2.jpeg')" data-aos="fade-up" data-aos-delay="150">
+      <article class="test-card scroll-reveal" style="--bg: url('images/testri2.jpeg')">
         <div class="overlay">
           <div class="stars">★★★★★</div>
           <p class="quote">"Das Konzept überzeugt mich total. Statt ins Blaue Supplements zu nehmen, bekomme ich jetzt Empfehlungen."</p>
@@ -167,189 +1284,187 @@
         </div>
       </article>
       
-      <article class="test-card" style="--bg: url('images/testri3.jpeg')" data-aos="fade-up" data-aos-delay="300">
+      <article class="test-card scroll-reveal" style="--bg: url('images/testri3.jpeg')">
         <div class="overlay">
           <div class="stars">★★★★★</div>
           <p class="quote">"Ich trainiere viel und hatte schon zig Produkte ausprobiert. Mit Vitanua habe ich ein Paket, das genau passt."</p>
           <p class="author">– Markus, 41, Verifizierter Tester</p>
         </div>
       </article>
-      
     </div>
   </div>
 </section>
 
-  <section class="_vitanua_unterschied">
-    <div class="_container">
-      <h2>Der Vitanua Unterschied</h2>
-      <div class="grid" role="list">
-        <!-- Left - Vitanua (featured) -->
-        <section class="_p_card featured" aria-label="Vitanua" data-aos="fade-up" data-aos-delay="0">
-          <div class="head">Vitanua</div>
-          <ul class="list">
-            <li >
-              <div class="label">Personalisierte Analyse</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Wissenschaftlich fundiert</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Bluttest inklusive</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Regelmäßige Anpassung</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Transparente Dosierung</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-          </ul>
-          <div class="spacer"></div>
-        </section>
+<!-- Comparison Section -->
+<section class="_vitanua_unterschied">
+  <div class="_container">
+    <h2>Der Vitanua Unterschied</h2>
+    <div class="grid" role="list">
+      <!-- Vitanua -->
+      <section class="_p_card featured scroll-reveal">
+        <div class="head">Vitanua</div>
+        <ul class="list">
+          <li>
+            <div class="label">Personalisierte Analyse</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Wissenschaftlich fundiert</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Bluttest inklusive</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Regelmäßige Anpassung</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Transparente Dosierung</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </section>
 
-        <!-- Middle - Standard Supplements -->
-        <section class="_p_card" aria-label="Standard Supplements" data-aos="fade-up" data-aos-delay="150">
-          <div class="head gray">Standard Supplements</div>
-          <ul class="list">
-            <li>
-              <div class="label">Personalisierte Analyse</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Wissenschaftlich fundiert</div>
-              <div class="status check" title="Teilweise" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Bluttest inklusive</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Regelmäßige Anpassung</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Transparente Dosierung</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-          </ul>
-          <div class="spacer"></div>
-        </section>
+      <!-- Standard Supplements -->
+      <section class="_p_card scroll-reveal">
+        <div class="head gray">Standard Supplements</div>
+        <ul class="list">
+          <li>
+            <div class="label">Personalisierte Analyse</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Wissenschaftlich fundiert</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Bluttest inklusive</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Regelmäßige Anpassung</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Transparente Dosierung</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </section>
 
-        <!-- Right - Apotheke -->
-        <section class="_p_card" aria-label="Apotheke" data-aos="fade-up" data-aos-delay="300">
-          <div class="head gray">Apotheke</div>
-          <ul class="list">
-            <li>
-              <div class="label">Personalisierte Analyse</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Wissenschaftlich fundiert</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Bluttest inklusive</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Regelmäßige Anpassung</div>
-              <div class="status cross" title="Nein" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-            <li>
-              <div class="label">Transparente Dosierung</div>
-              <div class="status check" title="Ja" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </li>
-          </ul>
-          <div class="spacer"></div>
-        </section>
-      </div>
+      <!-- Apotheke -->
+      <section class="_p_card scroll-reveal">
+        <div class="head gray">Apotheke</div>
+        <ul class="list">
+          <li>
+            <div class="label">Personalisierte Analyse</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Wissenschaftlich fundiert</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Bluttest inklusive</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Regelmäßige Anpassung</div>
+            <div class="status cross">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="#9aa3ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div class="label">Transparente Dosierung</div>
+            <div class="status check">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </section>
     </div>
-  </section>
+  </div>
+</section>
 
+<!-- Contact/Waitlist Section -->
 <section id="kontakt" class="_container">
   <div class="section-inner">
-    <div class="waitlist" id="waitlist">
-      <div class="form-area" data-aos="fade-up" data-aos-delay="150">
+    <div class="waitlist scroll-reveal">
+      <div class="form-area">
         <h3>Sei unter den Ersten.</h3>
-        <p class="muted">Trag dich ein und sichere dir den exklusiven Zugang zur Beta-Version & alle News zum Launch.</p>
-  <form id="waitlist-form">
-    <div class="left_right">
-      <input type="text" name="name" placeholder="Vorname" required />
-      <input type="text" name="lastname" placeholder="Nachname" required />
-    </div>
-    <input type="email" name="email" placeholder="E-Mail-Adresse" required />
-    <button class="form-btn" type="submit">
-      Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
-    </button>
-  </form>
+        <p>Trag dich ein und sichere dir den exklusiven Zugang zur Beta-Version & alle News zum Launch.</p>
+        <form id="waitlist-form">
+          <div class="left_right">
+            <input type="text" name="name" placeholder="Vorname" required />
+            <input type="text" name="lastname" placeholder="Nachname" required />
+          </div>
+          <input type="email" name="email" placeholder="E-Mail-Adresse" required />
+          <button class="form-btn" type="submit">
+            Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </form>
         <p id="waitlist-success" style="display:none;margin-top:10px;font-weight:700">Danke! Du bist jetzt auf der Warteliste.</p>
-        <p class="small-area">Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei</p>
+        <p class="small-area" style="font-size: 13px; margin-top: 24px; opacity: 0.9;">Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!</p>
       </div>
-      <div class="waitlist-aside" data-aos="fade-up" data-aos-delay="300">
+      <div class="waitlist-aside">
         <img src="images/paper-bag.png" alt="Packshot" class="packshot"/>
       </div>
     </div>
@@ -357,148 +1472,144 @@
 </section>
 
 <footer>
-<div class="footer-inner">
-  
-  <div class="footer-links">
-    <a href="datenschutz.html" class="nav-link">Datenschutz</a>
-    <a href="impressum.html" class="nav-link">Impressum</a>
-    <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:info@vitanua.de">Kontakt</a>
+    </div>
+    <p>© 2025 Vitanua. Alle Rechte vorbehalten.</p>
   </div>
-  <p>© 2025 Vitanua. Alle Rechte vorbehalten.</p>
-</div>
 </footer>
 
 <script>
-    document.getElementById("waitlist-form").addEventListener("submit", async function (e) {
-      e.preventDefault();
+// Interactive Cursor Effect for Hero Section
+document.addEventListener('DOMContentLoaded', function() {
+  const hero = document.getElementById('hero');
+  const heroGradient = hero.querySelector('.hero-gradient');
+  
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Direct update without any delay for instant response
+    heroGradient.style.setProperty('--mouse-x', `${x}px`);
+    heroGradient.style.setProperty('--mouse-y', `${y}px`);
+  });
 
-      const formData = new FormData(this);
-      const firstname = formData.get("name");
-      const lastname = formData.get("lastname");
-      const email = formData.get("email");
+  // Header scroll effect
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
 
-      // Airtable credentials
-      const token = "pathtAAcf4KIAWM0l.425d91dde52af27196487ceb8cc2da2261e9d7c2f57c11a17644be3c3e6eaa48"; 
-      const baseId = "appfe6f3nkTJchPql";  
-      const tableName = "Waitlist"; // <-- Airtable me jo table ka naam hai woh likho
+  // Scroll reveal animation
+  const revealElements = document.querySelectorAll('.scroll-reveal');
+  
+  const revealOnScroll = () => {
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementTop < windowHeight - 100) {
+        element.classList.add('revealed');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll(); // Initial check
 
-      const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mainNav = document.getElementById('mainNav');
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mainNav.classList.toggle('show');
+  });
 
-      const data = {
-        records: [
-          {
-            fields: {
-              "Firstname": firstname,
-              "Lastname": lastname,
-              "Email": email
-            }
+  // Close menu when clicking a link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mainNav.classList.remove('show');
+    });
+  });
+
+  // Form submission with Airtable
+  document.getElementById("waitlist-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const firstname = formData.get("name");
+    const lastname = formData.get("lastname");
+    const email = formData.get("email");
+
+    const token = "pathtAAcf4KIAWM0l.425d91dde52af27196487ceb8cc2da2261e9d7c2f57c11a17644be3c3e6eaa48"; 
+    const baseId = "appfe6f3nkTJchPql";  
+    const tableName = "Waitlist";
+
+    const url = `https://api.airtable.com/v0/${baseId}/${tableName}`;
+
+    const data = {
+      records: [
+        {
+          fields: {
+            "Firstname": firstname,
+            "Lastname": lastname,
+            "Email": email
           }
-        ]
-      };
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        console.log(result);
-
-        if (response.ok) {
-          alert("Danke! Ihre Anmeldung war erfolgreich.");
-          this.reset();
-        } else {
-          alert("Fehler: " + JSON.stringify(result));
         }
+      ]
+    };
 
-      } catch (error) {
-        console.error(error);
-        alert("Etwas ist schief gelaufen. Bitte erneut versuchen.");
-      }
-    });
-  </script>
-
-<script>
-// Waitlist form: demo payload (replace endpoint)
-const form = document.getElementById('waitlist-form');
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const fd = new FormData(form);
-  const payload = {name: fd.get('name'), email: fd.get('email'), timestamp: new Date().toISOString()};
-  const endpoint = 'REPLACE_WITH_YOUR_GOOGLE_APPS_SCRIPT_OR_AIRTABLE_ENDPOINT';
-  try{
-    if(endpoint.includes('REPLACE')){console.log('Payload (not sent):', payload);} else {await fetch(endpoint, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});} 
-    form.reset(); document.getElementById('waitlist-success').style.display='block';
-  }catch(err){console.error(err);alert('Fehler beim Absenden. Bitte später erneut versuchen.');}
-});
-</script>
-
-  <!-- AOS JS -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      AOS.init({
-        duration: 900,
-        once: true,
-        mirror: false
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       });
-    });
-  </script>
 
-  <!-- Link the JS file (deferred) -->
-  <script src="how-it-works.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
-<script>
-  tsParticles.load("tsparticles", {
-    fullScreen: { enable: false },
-    particles: {
-      number: { value: 40 }, /* kam dots */
-      color: { value: "#ffffff" },
-      shape: { type: "circle" },
-      opacity: { value: 0.4 },
-      size: { value: 3, random: true },
-      links: {
-        enable: true,
-        distance: 180,
-        color: "#ffffff",
-        opacity: 0.25,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 1.5,
-        outModes: { default: "out" }
+      const result = await response.json();
+
+      if (response.ok) {
+        this.reset();
+        document.getElementById('waitlist-success').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('waitlist-success').style.display = 'none';
+        }, 5000);
+      } else {
+        alert("Fehler: " + JSON.stringify(result));
       }
-    },
-    interactivity: {
-      events: {
-        onHover: { enable: true, mode: "grab" },
-        resize: true
-      },
-      modes: {
-        grab: { distance: 140, links: { opacity: 0.5 } }
-      }
-    },
-    detectRetina: true,
-    background: { color: "transparent" }
+    } catch (error) {
+      console.error(error);
+      alert("Etwas ist schief gelaufen. Bitte erneut versuchen.");
+    }
   });
-</script>
 
-<!-- Load jQuery first -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- /* Hamburger button */ -->
-<script>
-  $(function () {
-    $("#hamburger").on("click", function () {
-      $(this).toggleClass("active");
-      $("#mainNav").toggleClass("show");
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     });
   });
+});
 </script>
 
 </body>
