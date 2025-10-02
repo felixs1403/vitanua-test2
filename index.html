@@ -173,26 +173,24 @@
     /* Hero - Interactive Cursor Effect */
     .hero {
       padding: 180px 32px 120px;
-      max-width: 1400px;
       margin: 0 auto;
       position: relative;
-      overflow: hidden;
+      width: 100%;
     }
 
     .hero-gradient {
       position: absolute;
-      inset: 0;
+      inset: -200px;
       pointer-events: none;
-      overflow: hidden;
     }
 
     .hero-gradient::before {
       content: '';
       position: absolute;
-      width: 1000px;
-      height: 1000px;
-      top: calc(var(--mouse-y, 50%) - 500px);
-      left: calc(var(--mouse-x, 50%) - 500px);
+      width: 1200px;
+      height: 1200px;
+      top: calc(var(--mouse-y, 50%) - 600px);
+      left: calc(var(--mouse-x, 50%) - 600px);
       background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, rgba(155, 109, 240, 0.15) 25%, rgba(124, 58, 237, 0.08) 50%, transparent 70%);
       filter: blur(120px);
       transition: none;
@@ -388,7 +386,7 @@
       font-size: 16px;
     }
 
-    /* How it Works - Premium Cards with Enhanced Scroll */
+    /* How it Works - Sequential Layout */
     .how-section {
       padding: 120px 32px;
       background: var(--bg-primary);
@@ -428,102 +426,103 @@
       margin: 0 auto;
     }
 
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 32px;
-    }
-
-    .step-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    .how-row {
       position: relative;
-      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
     }
 
-    .step-card::before {
-      content: '';
+    .timeline {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 105px;
+      left: 10%;
+      right: 10%;
       height: 3px;
       background: linear-gradient(90deg, var(--purple-primary), var(--purple-light));
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
+      border-radius: 3px;
+      opacity: 0.2;
     }
 
-    .step-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.03), transparent 50%);
+    .step {
+      text-align: center;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      animation: fadeInScale 0.6s ease-out forwards;
     }
 
-    .step-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-xl);
-      border-color: var(--purple-primary);
+    .step:nth-child(2) { animation-delay: 0.1s; }
+    .step:nth-child(3) { animation-delay: 0.2s; }
+    .step:nth-child(4) { animation-delay: 0.3s; }
+    .step:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
-    .step-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .step-card:hover::after {
-      opacity: 1;
-    }
-
-    .step-image {
-      width: 100%;
-      height: 200px;
-      border-radius: var(--radius-md);
-      object-fit: cover;
+    .step .media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(107, 59, 214, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       margin-bottom: 24px;
-      transition: transform 0.4s ease;
     }
 
-    .step-card:hover .step-image {
+    .step:hover .media {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.2);
+    }
+
+    .step .media img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .step:hover .media img {
       transform: scale(1.05);
     }
 
-    .step-number {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--purple-subtle);
-      color: var(--purple-primary);
+    .badge {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 18px;
-      margin-bottom: 16px;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(107, 59, 214, 0.3);
       transition: all 0.3s ease;
     }
 
-    .step-card:hover .step-number {
-      background: var(--purple-primary);
-      color: white;
-      transform: rotate(360deg) scale(1.1);
+    .step:hover .badge {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(107, 59, 214, 0.4);
     }
 
-    .step-title {
+    .step h3 {
       font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
       margin-bottom: 12px;
+      color: var(--text-primary);
+      font-weight: 700;
     }
 
-    .step-description {
-      font-size: 15px;
+    .step p {
       color: var(--text-secondary);
       line-height: 1.6;
+      font-size: 15px;
     }
 
     /* Health Profile - Premium Layout */
@@ -546,18 +545,8 @@
     }
 
     .profile-visual {
-      background: var(--bg-primary);
-      border-radius: var(--radius-lg);
-      padding: 48px;
-      box-shadow: var(--shadow-md);
       position: sticky;
       top: 120px;
-      transition: all 0.4s ease;
-    }
-
-    .profile-visual:hover {
-      box-shadow: var(--shadow-xl);
-      transform: translateY(-4px);
     }
 
     .profile-visual img {
@@ -565,6 +554,7 @@
       height: auto;
       display: block;
       transition: transform 0.6s ease;
+      filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
     }
 
     .profile-visual:hover img {
@@ -1173,57 +1163,38 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Enhanced Scroll Reveal Animations */
+    /* Smooth Scroll Reveal Animations (No Zoom) */
     .scroll-reveal {
       opacity: 0;
-      transform: translateY(60px) scale(0.95);
-      filter: blur(5px);
-      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .scroll-reveal.revealed {
       opacity: 1;
-      transform: translateY(0) scale(1);
-      filter: blur(0);
+      transform: translateY(0);
     }
 
     .scroll-reveal-left {
       opacity: 0;
-      transform: translateX(-60px) rotate(-5deg);
-      filter: blur(3px);
-      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(-40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .scroll-reveal-left.revealed {
       opacity: 1;
-      transform: translateX(0) rotate(0deg);
-      filter: blur(0);
+      transform: translateX(0);
     }
 
     .scroll-reveal-right {
       opacity: 0;
-      transform: translateX(60px) rotate(5deg);
-      filter: blur(3px);
-      transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .scroll-reveal-right.revealed {
       opacity: 1;
-      transform: translateX(0) rotate(0deg);
-      filter: blur(0);
-    }
-
-    .scroll-reveal-zoom {
-      opacity: 0;
-      transform: scale(0.7);
-      filter: blur(10px);
-      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .scroll-reveal-zoom.revealed {
-      opacity: 1;
-      transform: scale(1);
-      filter: blur(0);
+      transform: translateX(0);
     }
 
     /* Responsive */
@@ -1257,6 +1228,14 @@
       .cta-visual img {
         max-width: 200px;
       }
+
+      .how-row {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        display: none;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1287,10 +1266,6 @@
         padding: 140px 24px 80px;
       }
 
-      .steps-grid {
-        grid-template-columns: 1fr;
-      }
-
       .form-row {
         grid-template-columns: 1fr;
       }
@@ -1314,11 +1289,11 @@
     </button>
     <nav class="main-nav" id="mainNav">
       <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
-      <a href="#kits" class="nav-link">Gesundheitsprofil</a>
-      <a href="#testimonials" class="nav-link">Erfahrungen</a>
+      <a href="#kits" class="nav-link">Test-Kits</a>
+      <a href="#_testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
       <a href="#kontakt" class="btn">
-        Jetzt vormerken <i class="fa-solid fa-arrow-right"></i>
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
       </a>
     </nav>
   </div>
@@ -1340,7 +1315,7 @@
     </p>
     <div class="hero-cta">
       <a href="#kontakt" class="btn-primary">
-        Jetzt vormerken <i class="fa-solid fa-arrow-right"></i>
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
       </a>
       <a href="#so-funktionierts" class="btn-secondary">
         Mehr erfahren
@@ -1365,45 +1340,42 @@
 
 <section id="so-funktionierts" class="how-section">
   <div class="how-inner">
-    <div class="section-header scroll-reveal-zoom">
+    <div class="section-header scroll-reveal">
       <div class="section-label">Der Vitanua Prozess</div>
-      <h2 class="section-title">In 4 Schritten zu deiner optimalen Gesundheit</h2>
+      <h2 class="section-title">So funktioniert's</h2>
       <p class="section-subtitle">
         Ein wissenschaftlich fundierter Ansatz für personalisierte Gesundheit
       </p>
     </div>
-    <div class="steps-grid">
-      <div class="step-card scroll-reveal">
-        <img src="images/Step 1.png" alt="Testkit" class="step-image">
-        <div class="step-number">1</div>
-        <h3 class="step-title">Testkit</h3>
-        <p class="step-description">
-          Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.
-        </p>
+    <div class="how-row">
+      <div class="timeline"></div>
+
+      <div class="step">
+        <div class="media"><img src="images/Step 1.png" alt="Testkit"></div>
+        <div class="badge">1</div>
+        <h3>Testkit</h3>
+        <p>Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.</p>
       </div>
-      <div class="step-card scroll-reveal">
-        <img src="images/new-images.jpg" alt="Fragebogen" class="step-image">
-        <div class="step-number">2</div>
-        <h3 class="step-title">Fragebogen</h3>
-        <p class="step-description">
-          In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.
-        </p>
+
+      <div class="step">
+        <div class="media"><img src="images/new-images.jpg" alt="Fragebogen"></div>
+        <div class="badge">2</div>
+        <h3>Fragebogen</h3>
+        <p>In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.</p>
       </div>
-      <div class="step-card scroll-reveal">
-        <img src="images/Step 3png.png" alt="KI-Analyse" class="step-image">
-        <div class="step-number">3</div>
-        <h3 class="step-title">KI-Analyse</h3>
-        <p class="step-description">
-          Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.
-        </p>
+
+      <div class="step">
+        <div class="media"><img src="images/Step 3png.png" alt="KI-Analyse"></div>
+        <div class="badge">3</div>
+        <h3>KI-Analyse</h3>
+        <p>Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.</p>
       </div>
-      <div class="step-card scroll-reveal">
-        <img src="images/imag-1-area.jpg" alt="Supplements" class="step-image">
-        <div class="step-number">4</div>
-        <h3 class="step-title">Deine Supplements</h3>
-        <p class="step-description">
-          Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.
-        </p>
+
+      <div class="step">
+        <div class="media"><img src="images/imag-1-area.jpg" alt="Deine Supplements"></div>
+        <div class="badge">4</div>
+        <h3>Deine Supplements</h3>
+        <p>Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.</p>
       </div>
     </div>
   </div>
@@ -1411,7 +1383,7 @@
 
 <section id="kits" class="profile-section">
   <div class="profile-inner">
-    <div class="section-header scroll-reveal-zoom">
+    <div class="section-header scroll-reveal">
       <div class="section-label">Dein Health Dashboard</div>
       <h2 class="section-title">Dein Gesundheitsprofil</h2>
       <p class="section-subtitle">
@@ -1493,9 +1465,9 @@
   </div>
 </section>
 
-<section id="testimonials" class="testimonials-section">
+<section id="_testimonials" class="testimonials-section">
   <div class="testimonials-inner">
-    <div class="section-header scroll-reveal-zoom">
+    <div class="section-header scroll-reveal">
       <div class="section-label">Kundenstimmen</div>
       <h2 class="section-title">Erfahrungsberichte</h2>
     </div>
@@ -1545,7 +1517,7 @@
 
 <section class="comparison-section">
   <div class="comparison-inner">
-    <div class="section-header scroll-reveal-zoom">
+    <div class="section-header scroll-reveal">
       <div class="section-label">Warum Vitanua</div>
       <h2 class="section-title">Der Vitanua Unterschied</h2>
       <p class="section-subtitle">
@@ -1694,7 +1666,7 @@
 
 <section id="kontakt" class="cta-section">
   <div class="cta-inner">
-    <div class="cta-wrapper scroll-reveal-zoom">
+    <div class="cta-wrapper scroll-reveal">
       <div class="cta-content">
         <h3>Sei unter den Ersten.</h3>
         <p>Trag dich ein und sichere dir den exklusiven Zugang zur Beta-Version & alle News zum Launch.</p>
@@ -1756,8 +1728,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Enhanced Scroll reveal animation
-  const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-zoom');
+  // Smooth Scroll reveal animation
+  const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
   
   const revealOnScroll = () => {
     revealElements.forEach(element => {
