@@ -68,7 +68,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.04);
       z-index: 999;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    }  
 
     .site-header.scrolled {
       background: rgba(255, 255, 255, 0.85);
@@ -540,7 +540,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
-      align-items: start;
+      align-items: center;
       margin-top: 64px;
     }
 
@@ -554,7 +554,6 @@
       height: auto;
       display: block;
       transition: transform 0.6s ease;
-      filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
     }
 
     .profile-visual:hover img {
@@ -1068,8 +1067,8 @@
     }
 
     .cta-note {
-      margin-top: 24px;
-      font-size: 13px;
+      margin-top: 12px;
+      font-size: 12px;
       opacity: 0.9;
     }
 
@@ -1277,10 +1276,7 @@
 <header class="site-header" id="header">
   <div class="header-inner">
     <a href="index.html" class="brand">
-      <div class="logo">
-        <img src="images/-09-24-at-2.15.png" alt="Vitanua Logo">
-      </div>
-      <small>vitanua</small>
+      <span class="brand-name">vitanua</span>
     </a>
     <button class="hamburger" id="hamburger">
       <span></span>
@@ -1289,7 +1285,7 @@
     </button>
     <nav class="main-nav" id="mainNav">
       <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
-      <a href="#kits" class="nav-link">Test-Kits</a>
+      <a href="#kits" class="nav-link">Gesundheitsprofil</a>
       <a href="#_testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
       <a href="#kontakt" class="btn">
@@ -1679,11 +1675,11 @@
           <button type="submit">
             Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
           </button>
+          <p class="cta-note">
+            Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!
+          </p>
         </form>
         <p id="waitlist-success" style="display:none;margin-top:16px;font-weight:600">✓ Danke! Du bist jetzt auf der Warteliste.</p>
-        <p class="cta-note">
-          Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!
-        </p>
       </div>
       <div class="cta-visual">
         <img src="images/paper-bag.png" alt="Vitanua Produkt">

@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Nexa Heavy';
+  src: url('fonts/nexa-heavy.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
 --purple-1: #3b1076;
 --purple-2: #6b3bd6;
@@ -1103,8 +1111,17 @@ background: #7a4ef2;
     ._how_it_works .media img {
     height: 190px;
 }
+  
+.site-header .brand-name {
+  font-family: 'Nexa Heavy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 800;
+  font-size: 28px;       /* größer */
+  letter-spacing: 0.5px; /* optional */
+  line-height: 1;
+  color: #111;           /* oder z. B. var(--purple-1) */
+}
 ._container {
-    padding: 60px 20px;
+  padding: 60px 20px;
 }
 
 .hero {
