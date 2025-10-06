@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Vitanua — Personalisierte Gesundheit</title>
   <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
   <style>
@@ -20,15 +21,25 @@
     }
 
     :root {
-      --purple: #7c3aed;
+      --purple-primary: #7c3aed;
       --purple-light: #9b6df0;
       --purple-dark: #6b3bd6;
-      --black: #000000;
-      --white: #ffffff;
-      --gray-50: #fafafa;
-      --gray-100: #f5f5f5;
-      --gray-900: #0a0a0a;
-      
+      --purple-subtle: #f3f0ff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.05);
+      --shadow-md: 0 4px 12px rgba(124, 58, 237, 0.08);
+      --shadow-lg: 0 12px 32px rgba(124, 58, 237, 0.1);
+      --shadow-xl: 0 20px 48px rgba(124, 58, 237, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --maxw: 1200px;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -41,469 +52,858 @@
     }
 
     body {
-      background: var(--white);
-      color: var(--black);
+      background: var(--bg-primary);
+      color: var(--text-primary);
       overflow-x: hidden;
-      font-size: 18px;
-      line-height: 1.5;
-      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    /* Header - Minimal */
+    /* Header - Ultra Clean */
     .site-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      padding: 24px 0;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 16px 0;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
       z-index: 999;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }  
+
+    .site-header.scrolled {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.06);
     }
 
     .header-inner {
-      max-width: 1400px;
+      max-width: var(--maxw);
       margin: 0 auto;
-      padding: 0 48px;
+      padding: 0 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo img {
+      width: 36px;
+      height: 36px;
+      transition: transform 0.4s ease;
+    }
+
+    .brand:hover .logo img {
+      transform: rotate(10deg) scale(1.05);
+    }
+
     .brand-name {
-      font-family: 'Nexa Heavy', 'Inter', sans-serif;
-      font-weight: 900;
-      font-size: 28px;
-      color: var(--black);
-      letter-spacing: -0.5px;
+      font-family: 'Nexa Heavy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      color: #000000;
+      letter-spacing: 0.5px;
     }
 
     .main-nav {
       display: flex;
       align-items: center;
-      gap: 48px;
+      gap: 40px;
     }
 
     .nav-link {
-      color: var(--black);
+      color: var(--text-secondary);
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 500;
-      transition: opacity 0.2s ease;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--purple-primary);
+      transition: width 0.3s ease;
     }
 
     .nav-link:hover {
-      opacity: 0.6;
+      color: var(--purple-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
     }
 
     .main-nav .btn {
-      background: var(--black);
+      background: var(--purple-primary);
       color: white;
-      padding: 14px 32px;
-      border-radius: 100px;
+      padding: 10px 24px;
+      border-radius: 999px;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .main-nav .btn:hover {
-      background: var(--purple);
+      background: var(--purple-dark);
       transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
     }
 
-    /* Hero - Massive Typography with Animated Gradient */
+    /* Hero - Interactive Cursor Effect */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 180px 48px 120px;
-      background: var(--black);
-      color: var(--white);
-      text-align: center;
+      padding: 180px 32px 120px;
+      margin: 0 auto;
       position: relative;
-      overflow: hidden;
+      width: 100%;
     }
 
-    .hero::before {
+    .hero-gradient {
+      position: absolute;
+      inset: -200px;
+      pointer-events: none;
+    }
+
+    .hero-gradient::before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 1000px;
-      height: 1000px;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, rgba(155, 109, 240, 0.1) 40%, transparent 70%);
-      filter: blur(100px);
-      animation: pulse 8s ease-in-out infinite;
+      width: 1200px;
+      height: 1200px;
+      top: calc(var(--mouse-y, 50%) - 600px);
+      left: calc(var(--mouse-x, 50%) - 600px);
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, rgba(155, 109, 240, 0.15) 25%, rgba(124, 58, 237, 0.08) 50%, transparent 70%);
+      filter: blur(120px);
+      transition: none;
+      animation: waber 6s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
+    @keyframes waber {
+      0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        filter: blur(120px);
       }
-      50% {
-        transform: translate(-50%, -50%) scale(1.2);
-        opacity: 0.8;
+      25% { 
+        transform: scale(1.15) rotate(90deg);
+        filter: blur(100px);
       }
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(155, 109, 240, 0.03) 0%, transparent 50%);
-      animation: float 15s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
+      50% { 
+        transform: scale(0.9) rotate(180deg);
+        filter: blur(140px);
       }
-      50% {
-        transform: translateY(-30px);
+      75% { 
+        transform: scale(1.1) rotate(270deg);
+        filter: blur(110px);
       }
     }
 
     .hero-content {
-      max-width: 1200px;
+      max-width: 720px;
+      text-align: center;
+      margin: 0 auto;
       position: relative;
       z-index: 1;
     }
 
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--purple-subtle);
+      color: var(--purple-primary);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.8s ease;
+      transition: all 0.3s ease;
+    }
+
+    .hero-badge:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+    }
+
     .hero h1 {
-      font-size: clamp(48px, 8vw, 96px);
-      line-height: 1;
-      font-weight: 900;
-      margin-bottom: 28px;
-      letter-spacing: -3px;
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: 1.1;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+      color: var(--text-primary);
+      animation: fadeInUp 0.8s ease 0.1s backwards;
     }
 
     .hero h1 .highlight {
-      color: var(--purple);
+      background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
     }
 
     .hero-lead {
-      font-size: clamp(18px, 2vw, 26px);
-      line-height: 1.4;
-      font-weight: 400;
-      opacity: 0.8;
-      max-width: 800px;
-      margin: 0 auto 48px;
-      letter-spacing: -0.3px;
+      font-size: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      animation: fadeInUp 0.8s ease 0.2s backwards;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-cta {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       justify-content: center;
       flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.3s backwards;
+      margin-bottom: 48px;
     }
 
     .btn-primary {
-      background: var(--purple);
+      background: var(--purple-primary);
       color: white;
-      padding: 20px 48px;
-      border-radius: 100px;
-      font-weight: 700;
-      font-size: 18px;
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 16px;
       text-decoration: none;
-      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: none;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
     .btn-primary:hover {
       background: var(--purple-dark);
-      transform: scale(1.05);
-      box-shadow: 0 10px 40px rgba(124, 58, 237, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.35);
     }
 
     .btn-secondary {
-      background: transparent;
-      color: var(--white);
-      padding: 20px 48px;
-      border-radius: 100px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 16px 32px;
+      border-radius: 999px;
       font-weight: 600;
-      font-size: 18px;
+      font-size: 16px;
       text-decoration: none;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--border);
     }
 
     .btn-secondary:hover {
-      border-color: var(--white);
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--bg-tertiary);
+      border-color: var(--purple-primary);
+      color: var(--purple-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
     }
 
-    /* Section - Extreme Spacing */
-    .section {
-      padding: 160px 48px;
-      max-width: 1400px;
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.4s backwards;
+    }
+
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .trust-badge:hover {
+      color: var(--purple-primary);
+      transform: translateY(-2px);
+    }
+
+    .trust-badge i {
+      color: var(--purple-primary);
+      font-size: 16px;
+    }
+
+    /* How it Works - Sequential Layout */
+    .how-section {
+      padding: 120px 32px;
+      background: var(--bg-primary);
+    }
+
+    .how-inner {
+      max-width: var(--maxw);
       margin: 0 auto;
     }
 
-    .section-dark {
-      background: var(--black);
-      color: var(--white);
-      padding: 160px 48px;
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-label {
+      color: var(--purple-primary);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
     }
 
     .section-title {
-      font-size: clamp(48px, 7vw, 96px);
-      line-height: 1;
-      font-weight: 900;
-      margin-bottom: 24px;
-      letter-spacing: -3px;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
     }
 
     .section-subtitle {
-      font-size: clamp(20px, 2.5vw, 32px);
-      line-height: 1.3;
-      font-weight: 400;
-      opacity: 0.7;
-      max-width: 800px;
-      letter-spacing: -0.5px;
-    }
-
-    .section-center {
-      text-align: center;
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
       margin: 0 auto;
-      max-width: 1000px;
     }
 
-    /* Process - Vertebrae Layout */
-    .process-grid {
+    .how-row {
+      position: relative;
       display: grid;
-      gap: 80px;
-      margin-top: 120px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
     }
 
-    .process-item {
+    .timeline {
+      position: absolute;
+      top: 105px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple-primary), var(--purple-light));
+      border-radius: 3px;
+      opacity: 0.2;
+    }
+
+    .step {
+      text-align: center;
+      opacity: 0;
+      animation: fadeInScale 0.6s ease-out forwards;
+    }
+
+    .step:nth-child(2) { animation-delay: 0.1s; }
+    .step:nth-child(3) { animation-delay: 0.2s; }
+    .step:nth-child(4) { animation-delay: 0.3s; }
+    .step:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .step .media {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(107, 59, 214, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 24px;
+    }
+
+    .step:hover .media {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(107, 59, 214, 0.2);
+    }
+
+    .step .media img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .step:hover .media img {
+      transform: scale(1.05);
+    }
+
+    .badge {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px rgba(107, 59, 214, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .step:hover .badge {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(107, 59, 214, 0.4);
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .step p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* Health Profile - Premium Layout */
+    .profile-section {
+      padding: 120px 32px;
+      background: var(--bg-secondary);
+    }
+
+    .profile-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+    }
+
+    .profile-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      gap: 64px;
       align-items: center;
+      margin-top: 64px;
     }
 
-    .process-item:nth-child(even) {
-      direction: rtl;
+    .profile-visual {
+      position: sticky;
+      top: 120px;
     }
 
-    .process-item:nth-child(even) > * {
-      direction: ltr;
-    }
-
-    .process-visual {
-      position: relative;
-      aspect-ratio: 4/3;
-      border-radius: 32px;
-      overflow: hidden;
-      background: var(--gray-100);
-    }
-
-    .process-visual img {
+    .profile-visual img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      display: block;
+      transition: transform 0.6s ease;
     }
 
-    .process-number {
-      font-size: 120px;
-      font-weight: 900;
-      color: var(--purple);
-      line-height: 1;
+    .profile-visual:hover img {
+      transform: scale(1.03) rotate(1deg);
+    }
+
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .info-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .info-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--purple-primary);
+      transform: translateX(4px);
+    }
+
+    .info-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .info-card p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
       margin-bottom: 24px;
-      opacity: 0.3;
     }
 
-    .process-title {
-      font-size: clamp(32px, 4vw, 56px);
-      font-weight: 800;
-      margin-bottom: 20px;
-      letter-spacing: -2px;
+    .accordion-trigger {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      border: 1px solid transparent;
     }
 
-    .process-text {
-      font-size: 20px;
-      line-height: 1.6;
-      opacity: 0.7;
+    .accordion-trigger:hover {
+      background: var(--purple-subtle);
+      border-color: var(--purple-primary);
+      transform: translateX(4px);
     }
 
-    /* Biomarkers Section - Simplified */
-    .biomarkers-section {
-      background: var(--gray-50);
-      padding: 160px 48px;
+    .accordion-trigger.active {
+      background: var(--purple-primary);
+      border-color: var(--purple-primary);
+    }
+
+    .accordion-trigger h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+      transition: color 0.2s ease;
+    }
+
+    .accordion-trigger.active h4 {
+      color: white;
+    }
+
+    .accordion-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--purple-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .accordion-trigger.active .accordion-icon {
+      background: white;
+      transform: rotate(180deg);
+    }
+
+    .accordion-icon svg {
+      width: 12px;
+      height: 12px;
+      stroke: white;
+      stroke-width: 3;
+      transition: stroke 0.2s ease;
+    }
+
+    .accordion-trigger.active .accordion-icon svg {
+      stroke: var(--purple-primary);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0;
+    }
+
+    .accordion-content.open {
+      max-height: 2000px;
+      padding-top: 32px;
     }
 
     .biomarkers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 32px;
-      margin-top: 80px;
     }
 
-    .biomarker-card {
-      background: var(--white);
-      padding: 40px 32px;
-      border-radius: 24px;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      text-align: center;
+    .biomarker-category {
+      opacity: 0;
+      transform: translateY(10px);
     }
 
-    .biomarker-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    .accordion-content.open .biomarker-category {
+      animation: fadeInUp 0.4s ease forwards;
     }
 
-    .biomarker-icon {
-      width: 56px;
-      height: 56px;
-      background: var(--purple);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      color: white;
-      font-size: 24px;
-    }
+    .accordion-content.open .biomarker-category:nth-child(1) { animation-delay: 0.05s; }
+    .accordion-content.open .biomarker-category:nth-child(2) { animation-delay: 0.1s; }
+    .accordion-content.open .biomarker-category:nth-child(3) { animation-delay: 0.15s; }
+    .accordion-content.open .biomarker-category:nth-child(4) { animation-delay: 0.2s; }
 
-    .biomarker-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .biomarker-description {
+    .category-title {
       font-size: 15px;
-      opacity: 0.7;
-      line-height: 1.6;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
     }
 
-    /* Testimonials - Clean Cards */
+    .biomarker-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .biomarker-list li {
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+      transition: all 0.2s ease;
+    }
+
+    .biomarker-list li:hover {
+      color: var(--purple-primary);
+      padding-left: 24px;
+    }
+
+    .biomarker-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--purple-primary);
+      transition: all 0.2s ease;
+    }
+
+    .biomarker-list li:hover::before {
+      width: 6px;
+      height: 6px;
+      top: 13px;
+    }
+
+    /* Testimonials - Card Style */
     .testimonials-section {
-      padding: 160px 48px;
+      padding: 120px 32px;
+      background: var(--bg-primary);
+    }
+
+    .testimonials-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
     }
 
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 40px;
-      margin-top: 80px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-top: 64px;
     }
 
     .testimonial-card {
-      background: var(--gray-50);
-      padding: 48px;
-      border-radius: 32px;
-      transition: all 0.3s ease;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.05), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
     .testimonial-card:hover {
-      background: var(--gray-100);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--purple-primary);
+    }
+
+    .testimonial-card:hover::after {
+      opacity: 1;
     }
 
     .testimonial-stars {
-      color: var(--purple);
-      font-size: 24px;
-      margin-bottom: 24px;
+      color: #f59e0b;
+      font-size: 18px;
+      margin-bottom: 16px;
     }
 
     .testimonial-text {
-      font-size: 20px;
-      line-height: 1.6;
-      margin-bottom: 32px;
-      font-weight: 500;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .testimonial-author {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
     }
 
     .author-avatar {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
+      border: 2px solid var(--purple-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .testimonial-card:hover .author-avatar {
+      border-color: var(--purple-primary);
+      transform: scale(1.1);
+    }
+
+    .author-info {
+      flex: 1;
     }
 
     .author-name {
-      font-weight: 700;
-      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 15px;
     }
 
     .author-role {
-      font-size: 14px;
-      opacity: 0.6;
+      font-size: 13px;
+      color: var(--text-tertiary);
     }
 
-    /* Comparison - Minimal Table */
+    /* Comparison - Clean Table */
     .comparison-section {
-      background: var(--black);
-      color: var(--white);
-      padding: 160px 48px;
+      padding: 120px 32px;
+      background: var(--bg-secondary);
+    }
+
+    .comparison-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
     }
 
     .comparison-table {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      margin-top: 80px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 64px;
     }
 
     .comparison-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 24px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .comparison-card:hover {
-      border-color: var(--purple);
-      transform: translateY(-8px);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
     }
 
     .comparison-card.featured {
-      background: var(--white);
-      color: var(--black);
-      border: 2px solid var(--purple);
+      border: 2px solid var(--purple-primary);
       transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .comparison-card.featured:hover {
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: var(--shadow-xl);
     }
 
     .comparison-header {
-      padding: 32px;
-      font-weight: 800;
-      font-size: 24px;
+      padding: 24px;
       text-align: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+      font-size: 18px;
     }
 
     .comparison-card.featured .comparison-header {
-      background: var(--purple);
-      color: var(--white);
-      border: none;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      color: white;
+    }
+
+    .comparison-card:not(.featured) .comparison-header {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
     }
 
     .comparison-features {
@@ -512,96 +912,114 @@
     }
 
     .comparison-features li {
-      padding: 24px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 16px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-primary);
+      transition: background 0.2s ease;
     }
 
-    .comparison-card.featured .comparison-features li {
-      border-color: rgba(0, 0, 0, 0.05);
+    .comparison-card.featured .comparison-features li:hover {
+      background: var(--purple-subtle);
     }
 
     .feature-check {
-      width: 24px;
-      height: 24px;
-      background: var(--purple);
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
+      background: var(--purple-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .comparison-features li:hover .feature-check {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .feature-check svg {
+      width: 12px;
+      height: 12px;
+      stroke: white;
+      stroke-width: 3;
     }
 
     .feature-cross {
-      width: 24px;
-      height: 24px;
-      background: rgba(255, 255, 255, 0.1);
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
+      background: var(--bg-tertiary);
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0.3;
-      font-size: 14px;
     }
 
-    /* CTA Section - With Image */
+    .feature-cross svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--text-tertiary);
+      stroke-width: 2;
+    }
+
+    /* CTA Section */
     .cta-section {
-      background: var(--purple);
-      color: var(--white);
-      padding: 160px 48px;
+      padding: 120px 32px;
+      background: var(--bg-primary);
+    }
+
+    .cta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     .cta-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
       display: flex;
-      gap: 64px;
+      gap: 48px;
       align-items: center;
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
     }
 
     .cta-content {
       flex: 1;
-    }
-
-    .cta-section h2 {
-      font-size: clamp(48px, 7vw, 96px);
-      line-height: 1;
-      font-weight: 900;
-      margin-bottom: 32px;
-      letter-spacing: -3px;
-      text-align: left;
-    }
-
-    .cta-section p {
-      font-size: clamp(20px, 2.5vw, 28px);
-      margin-bottom: 48px;
-      opacity: 0.9;
-      text-align: left;
-    }
-
-    .cta-visual {
-      flex-shrink: 0;
       position: relative;
+      z-index: 1;
     }
 
-    .cta-visual img {
-      max-width: 320px;
-      height: auto;
-      filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3));
-      animation: floatImage 6s ease-in-out infinite;
+    .cta-wrapper h3 {
+      font-size: clamp(32px, 4vw, 42px);
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
     }
 
-    @keyframes floatImage {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(2deg);
-      }
+    .cta-wrapper p {
+      font-size: 18px;
+      margin-bottom: 32px;
+      opacity: 0.95;
     }
 
     .cta-form {
@@ -611,80 +1029,111 @@
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
     .cta-form input {
       width: 100%;
-      padding: 20px 24px;
-      border-radius: 100px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.15);
       backdrop-filter: blur(10px);
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       transition: all 0.3s ease;
     }
 
     .cta-form input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255,255,255,0.7);
     }
 
     .cta-form input:focus {
       outline: none;
-      border-color: var(--white);
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
     }
 
     .cta-form button {
       width: 100%;
-      padding: 20px;
-      border-radius: 100px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
       border: none;
-      background: var(--black);
-      color: white;
+      background: white;
+      color: var(--purple-primary);
       font-weight: 700;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-top: 16px;
+      margin-top: 12px;
     }
 
     .cta-form button:hover {
-      transform: scale(1.02);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
+    .cta-note {
+      margin-top: 12px;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .cta-visual {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .cta-visual img {
+      max-width: 280px;
+      height: auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+      animation: floatProduct 6s ease-in-out infinite;
+    }
+
+    @keyframes floatProduct {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
     }
 
     /* Footer */
     footer {
-      padding: 80px 48px 40px;
-      background: var(--black);
-      color: var(--white);
+      padding: 64px 32px 32px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
       text-align: center;
     }
 
     .footer-links {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       justify-content: center;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
     }
 
     .footer-links a {
-      color: var(--white);
+      color: var(--text-secondary);
       text-decoration: none;
-      font-size: 16px;
-      opacity: 0.6;
-      transition: opacity 0.2s ease;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
     }
 
     .footer-links a:hover {
-      opacity: 1;
+      color: var(--purple-primary);
+      transform: translateY(-2px);
     }
 
     .footer-copyright {
-      opacity: 0.4;
+      color: var(--text-tertiary);
       font-size: 14px;
     }
 
@@ -693,8 +1142,8 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
-      width: 28px;
-      height: 20px;
+      width: 24px;
+      height: 18px;
       background: none;
       border: none;
       cursor: pointer;
@@ -705,13 +1154,13 @@
       display: block;
       height: 2px;
       width: 100%;
-      background: var(--black);
+      background: var(--text-primary);
       border-radius: 2px;
       transition: all 0.3s ease;
     }
 
     .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
+      transform: rotate(45deg) translate(5px, 5px);
     }
 
     .hamburger.active span:nth-child(2) {
@@ -719,32 +1168,56 @@
     }
 
     .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Animations */
-    .fade-in {
+    /* Smooth Scroll Reveal Animations (No Zoom) */
+    .scroll-reveal {
       opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s ease forwards;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scroll-reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal-left.revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .scroll-reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal-right.revealed {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     /* Responsive */
-    @media (max-width: 1024px) {
-      .process-item {
+    @media (max-width: 968px) {
+      .profile-grid {
         grid-template-columns: 1fr;
         gap: 40px;
       }
 
-      .process-item:nth-child(even) {
-        direction: ltr;
+      .profile-visual {
+        position: static;
+      }
+
+      .biomarkers-grid {
+        grid-template-columns: 1fr;
       }
 
       .comparison-table {
@@ -754,21 +1227,26 @@
       .comparison-card.featured {
         transform: scale(1);
       }
+
+      .cta-wrapper {
+        flex-direction: column;
+        padding: 48px 32px;
+      }
+
+      .cta-visual img {
+        max-width: 200px;
+      }
+
+      .how-row {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        display: none;
+      }
     }
 
     @media (max-width: 768px) {
-      .site-header {
-        padding: 16px 0;
-      }
-
-      .header-inner {
-        padding: 0 24px;
-      }
-
-      .brand-name {
-        font-size: 24px;
-      }
-
       .hamburger {
         display: flex;
       }
@@ -779,12 +1257,13 @@
         top: 68px;
         left: 0;
         right: 0;
-        background: var(--white);
-        padding: 32px 24px;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        padding: 32px;
         flex-direction: column;
         gap: 24px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
       }
 
       .main-nav.show {
@@ -795,30 +1274,12 @@
         padding: 140px 24px 80px;
       }
 
-      .section, .section-dark, .biomarkers-section, .testimonials-section, .comparison-section, .cta-section {
-        padding: 80px 24px;
-      }
-
-      .cta-wrapper {
-        flex-direction: column;
-        gap: 40px;
-      }
-
-      .cta-section h2,
-      .cta-section p {
-        text-align: center;
-      }
-
-      .cta-visual img {
-        max-width: 240px;
-      }
-
       .form-row {
         grid-template-columns: 1fr;
       }
 
-      .biomarkers-grid, .testimonials-grid {
-        grid-template-columns: 1fr;
+      .brand-name {
+        font-size: 32px;
       }
     }
   </style>
@@ -827,8 +1288,8 @@
 
 <header class="site-header" id="header">
   <div class="header-inner">
-    <a href="index.html" style="text-decoration: none;">
-      <div class="brand-name">vitanua</div>
+    <a href="index.html" class="brand">
+      <span class="brand-name">vitanua</span>
     </a>
     <button class="hamburger" id="hamburger">
       <span></span>
@@ -836,162 +1297,227 @@
       <span></span>
     </button>
     <nav class="main-nav" id="mainNav">
-      <a href="#prozess" class="nav-link">Prozess</a>
-      <a href="#biomarker" class="nav-link">Biomarker</a>
-      <a href="#erfahrungen" class="nav-link">Erfahrungen</a>
+      <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
+      <a href="#kits" class="nav-link">Gesundheitsprofil</a>
+      <a href="#_testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
-      <a href="#waitlist" class="btn">Jetzt starten</a>
+      <a href="#kontakt" class="btn">
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+      </a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="hero">
+  <div class="hero-gradient"></div>
   <div class="hero-content">
-    <h1 class="fade-in">
-      Deine Gesundheit<br>
-      <span class="highlight">neu entdeckt</span>
+    <div class="hero-badge">
+      <i class="fa-solid fa-sparkles"></i>
+      Personalisierte Health Intelligence
+    </div>
+    <h1>
+      Deine Gesundheit,<br>
+      <span class="highlight">individuell optimiert</span>
     </h1>
-    <p class="hero-lead fade-in">
-      Wissenschaftlich fundierte Bluttests und personalisierte Nährstoff-Empfehlungen für dein optimales Wohlbefinden
+    <p class="hero-lead">
+      Entdecke deine persönlichen Gesundheitsbedürfnisse mit wissenschaftlich fundierten Bluttests und maßgeschneiderten Nährstoff-Kits.
     </p>
-    <div class="hero-cta fade-in">
-      <a href="#waitlist" class="btn-primary">Jetzt vormerken</a>
-      <a href="#prozess" class="btn-secondary">Mehr erfahren</a>
+    <div class="hero-cta">
+      <a href="#kontakt" class="btn-primary">
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+      </a>
+      <a href="#so-funktionierts" class="btn-secondary">
+        Mehr erfahren
+      </a>
     </div>
-  </div>
-</section>
-
-<section id="prozess" class="section">
-  <div class="section-center">
-    <h2 class="section-title">Es startet mit 24+ Biomarkern</h2>
-    <p class="section-subtitle">Von Stoffwechsel bis Hormone – wir erkennen früh, was dein Körper braucht</p>
-  </div>
-
-  <div class="process-grid">
-    <div class="process-item">
-      <div class="process-visual">
-        <img src="images/Step 1.png" alt="Testkit">
+    <div class="trust-badges">
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Wissenschaftlich fundiert
       </div>
-      <div>
-        <div class="process-number">01</div>
-        <h3 class="process-title">Testkit</h3>
-        <p class="process-text">Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität. Alles bequem von zuhause.</p>
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Personalisierte Lösungen
       </div>
-    </div>
-
-    <div class="process-item">
-      <div class="process-visual">
-        <img src="images/new-images.jpg" alt="Fragebogen">
-      </div>
-      <div>
-        <div class="process-number">02</div>
-        <h3 class="process-title">Fragebogen</h3>
-        <p class="process-text">In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil für eine ganzheitliche Analyse.</p>
-      </div>
-    </div>
-
-    <div class="process-item">
-      <div class="process-visual">
-        <img src="images/Step 3png.png" alt="KI-Analyse">
-      </div>
-      <div>
-        <div class="process-number">03</div>
-        <h3 class="process-title">KI-Analyse</h3>
-        <p class="process-text">Unsere KI verwandelt deine Biomarker in klare, wissenschaftlich fundierte Gesundheitsempfehlungen.</p>
-      </div>
-    </div>
-
-    <div class="process-item">
-      <div class="process-visual">
-        <img src="images/imag-1-area.jpg" alt="Personalisierte Supplements">
-      </div>
-      <div>
-        <div class="process-number">04</div>
-        <h3 class="process-title">Deine Supplements</h3>
-        <p class="process-text">Individuell für dich zusammengestellt – praktisch verpackt und direkt nach Hause geliefert.</p>
+      <div class="trust-badge">
+        <i class="fa-solid fa-check-circle"></i>
+        Premium Qualität
       </div>
     </div>
   </div>
 </section>
 
-<section id="biomarker" class="biomarkers-section">
-  <div class="section-center">
-    <h2 class="section-title">Umfassende Gesundheitsanalyse</h2>
-    <p class="section-subtitle">24+ Biomarker in vier essentiellen Gesundheitsbereichen</p>
-  </div>
-
-  <div class="biomarkers-grid">
-    <div class="biomarker-card">
-      <div class="biomarker-icon"><i class="fa-solid fa-heart-pulse"></i></div>
-      <h3 class="biomarker-title">Stoffwechsel & Herz-Kreislauf</h3>
-      <p class="biomarker-description">Langzeitblutzucker, Cholesterin, Blutfette und weitere wichtige Marker</p>
-    </div>
-
-    <div class="biomarker-card">
-      <div class="biomarker-icon"><i class="fa-solid fa-capsules"></i></div>
-      <h3 class="biomarker-title">Vitamine & Mikronährstoffe</h3>
-      <p class="biomarker-description">Vitamin D, B12, Folat und weitere essentielle Nährstoffe</p>
-    </div>
-
-    <div class="biomarker-card">
-      <div class="biomarker-icon"><i class="fa-solid fa-dna"></i></div>
-      <h3 class="biomarker-title">Hormone & Stressregulation</h3>
-      <p class="biomarker-description">Cortisol, Testosteron, Schilddrüsenwerte und Stresshormone</p>
-    </div>
-
-    <div class="biomarker-card">
-      <div class="biomarker-icon"><i class="fa-solid fa-shield-virus"></i></div>
-      <h3 class="biomarker-title">Entzündung & Immunität</h3>
-      <p class="biomarker-description">CRP, Immunglobuline und weitere Immunmarker</p>
-    </div>
-  </div>
-</section>
-
-<section id="erfahrungen" class="testimonials-section">
-  <div class="section-center">
-    <h2 class="section-title">Was unsere Tester sagen</h2>
-    <p class="section-subtitle">Echte Menschen, echte Ergebnisse, personalisierte Gesundheit</p>
-  </div>
-
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">
-        "Die Auswertung hat mir echt die Augen geöffnet. Endlich verstehe ich meinen Körper besser."
+<section id="so-funktionierts" class="how-section">
+  <div class="how-inner">
+    <div class="section-header scroll-reveal">
+      <div class="section-label">Der Vitanua Prozess</div>
+      <h2 class="section-title">So funktioniert's</h2>
+      <p class="section-subtitle">
+        Ein wissenschaftlich fundierter Ansatz für personalisierte Gesundheit
       </p>
-      <div class="testimonial-author">
-        <img src="images/testri1.jpeg" alt="Tobias" class="author-avatar">
-        <div>
-          <div class="author-name">Tobias, 29</div>
-          <div class="author-role">Verifizierter Tester</div>
+    </div>
+    <div class="how-row">
+      <div class="timeline"></div>
+
+      <div class="step">
+        <div class="media"><img src="images/Step 1.png" alt="Testkit"></div>
+        <div class="badge">1</div>
+        <h3>Testkit</h3>
+        <p>Ein Fingerstich genügt – schnell, einfach und mit geprüfter Laborqualität.</p>
+      </div>
+
+      <div class="step">
+        <div class="media"><img src="images/new-images.jpg" alt="Fragebogen"></div>
+        <div class="badge">2</div>
+        <h3>Fragebogen</h3>
+        <p>In wenigen Minuten beantwortest du Fragen zu Ernährung, Schlaf und Lebensstil.</p>
+      </div>
+
+      <div class="step">
+        <div class="media"><img src="images/Step 3png.png" alt="KI-Analyse"></div>
+        <div class="badge">3</div>
+        <h3>KI-Analyse</h3>
+        <p>Unsere KI macht aus deinen Biomarkern klare, wissenschaftlich fundierte Empfehlungen.</p>
+      </div>
+
+      <div class="step">
+        <div class="media"><img src="images/imag-1-area.jpg" alt="Deine Supplements"></div>
+        <div class="badge">4</div>
+        <h3>Deine Supplements</h3>
+        <p>Individuell zusammengestellt für dich – praktisch verpackt und direkt nach Hause geliefert.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kits" class="profile-section">
+  <div class="profile-inner">
+    <div class="section-header scroll-reveal">
+      <div class="section-label">Dein Health Dashboard</div>
+      <h2 class="section-title">Dein Gesundheitsprofil</h2>
+      <p class="section-subtitle">
+        Kombiniere präzise Biomarker-Analyse mit umfassenden Gesundheitsdaten 
+        für ein komplettes Bild deiner Gesundheit
+      </p>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-visual scroll-reveal-left">
+        <img src="images/9-24-at-2.14.png" alt="Vitanua Testkit">
+      </div>
+      <div class="profile-content">
+        <div class="info-card scroll-reveal-right">
+          <h3>Dein Rundum-Bild</h3>
+          <p>
+            Durch das Vitanua Heimtestkit und einen ergänzenden Gesundheitsfragebogen 
+            entsteht ein Rundum-Bild über deine aktuelle Gesundheit. Einfach zuhause 
+            durchgeführt, wissenschaftlich ausgewertet, individuell für dich.
+          </p>
+          <div class="accordion-trigger" id="accordionTrigger">
+            <h4>Teste mit dem Vitanua Testkit 24 Biomarker</h4>
+            <div class="accordion-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="accordion-content" id="accordionContent">
+            <div class="biomarkers-grid">
+              <div class="biomarker-category">
+                <div class="category-title">Stoffwechsel & Herz-Kreislauf</div>
+                <ul class="biomarker-list">
+                  <li>HbA1c (Langzeitblutzucker)</li>
+                  <li>Gesamtcholesterin</li>
+                  <li>LDL-Cholesterin</li>
+                  <li>HDL-Cholesterin</li>
+                  <li>Triglyzeride (Blutfette)</li>
+                  <li>Non-HDL-Cholesterin</li>
+                  <li>Harnsäure</li>
+                  <li>Homocystein</li>
+                </ul>
+              </div>
+              <div class="biomarker-category">
+                <div class="category-title">Vitamine & Mikronährstoffe</div>
+                <ul class="biomarker-list">
+                  <li>Vitamin D</li>
+                  <li>Vitamin B12</li>
+                  <li>Folat (Vitamin B9)</li>
+                  <li>Vitamin A</li>
+                  <li>Vitamin E</li>
+                </ul>
+              </div>
+              <div class="biomarker-category">
+                <div class="category-title">Hormone & Stressregulation</div>
+                <ul class="biomarker-list">
+                  <li>Cortisol</li>
+                  <li>Testosteron</li>
+                  <li>Estradiol</li>
+                  <li>DHEA</li>
+                  <li>Progesteron</li>
+                  <li>TSH</li>
+                  <li>fT4</li>
+                </ul>
+              </div>
+              <div class="biomarker-category">
+                <div class="category-title">Entzündung & Immunität</div>
+                <ul class="biomarker-list">
+                  <li>CRP (Entzündungsmarker)</li>
+                  <li>IgG</li>
+                  <li>IgA</li>
+                  <li>IgM</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">
-        "Statt ins Blaue Supplements zu nehmen, bekomme ich jetzt wissenschaftlich fundierte Empfehlungen."
-      </p>
-      <div class="testimonial-author">
-        <img src="images/testri2.jpeg" alt="Philipp" class="author-avatar">
-        <div>
-          <div class="author-name">Philipp, 34</div>
-          <div class="author-role">Verifizierter Tester</div>
+<section id="_testimonials" class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="section-header scroll-reveal">
+      <div class="section-label">Kundenstimmen</div>
+      <h2 class="section-title">Erfahrungsberichte</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Ich war überrascht, wie einfach das Testkit zu benutzen war. Die Auswertung hat mir echt die Augen geöffnet."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri1.jpeg" alt="Tobias" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Tobias, 29</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">
-        "Mit Vitanua habe ich ein Paket, das genau zu mir und meinem Training passt."
-      </p>
-      <div class="testimonial-author">
-        <img src="images/testri3.jpeg" alt="Markus" class="author-avatar">
-        <div>
-          <div class="author-name">Markus, 41</div>
-          <div class="author-role">Verifizierter Tester</div>
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Das Konzept überzeugt mich total. Statt ins Blaue Supplements zu nehmen, bekomme ich jetzt Empfehlungen."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri2.jpeg" alt="Philipp" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Philipp, 34</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card scroll-reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Ich trainiere viel und hatte schon zig Produkte ausprobiert. Mit Vitanua habe ich ein Paket, das genau passt."
+        </p>
+        <div class="testimonial-author">
+          <img src="images/testri3.jpeg" alt="Markus" class="author-avatar">
+          <div class="author-info">
+            <div class="author-name">Markus, 41</div>
+            <div class="author-role">Verifizierter Tester</div>
+          </div>
         </div>
       </div>
     </div>
@@ -999,133 +1525,234 @@
 </section>
 
 <section class="comparison-section">
-  <div class="section-center">
-    <h2 class="section-title">Der Vitanua Unterschied</h2>
-    <p class="section-subtitle">Personalisierte Health Intelligence statt Einheitslösung</p>
-  </div>
-
-  <div class="comparison-table">
-    <div class="comparison-card featured">
-      <div class="comparison-header">Vitanua</div>
-      <ul class="comparison-features">
-        <li>
-          <span>Personalisierte Analyse</span>
-          <span class="feature-check">✓</span>
-        </li>
-        <li>
-          <span>Wissenschaftlich fundiert</span>
-          <span class="feature-check">✓</span>
-        </li>
-        <li>
-          <span>Bluttest inklusive</span>
-          <span class="feature-check">✓</span>
-        </li>
-        <li>
-          <span>Regelmäßige Anpassung</span>
-          <span class="feature-check">✓</span>
-        </li>
-        <li>
-          <span>Transparente Dosierung</span>
-          <span class="feature-check">✓</span>
-        </li>
-      </ul>
+  <div class="comparison-inner">
+    <div class="section-header scroll-reveal">
+      <div class="section-label">Warum Vitanua</div>
+      <h2 class="section-title">Der Vitanua Unterschied</h2>
+      <p class="section-subtitle">
+        Personalisierte Health Intelligence statt Einheitslösung
+      </p>
     </div>
-
-    <div class="comparison-card">
-      <div class="comparison-header">Standard Supplements</div>
-      <ul class="comparison-features">
-        <li>
-          <span>Personalisierte Analyse</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Wissenschaftlich fundiert</span>
-          <span class="feature-check">✓</span>
-        </li>
-        <li>
-          <span>Bluttest inklusive</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Regelmäßige Anpassung</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Transparente Dosierung</span>
-          <span class="feature-cross">×</span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="comparison-card">
-      <div class="comparison-header">Apotheke</div>
-      <ul class="comparison-features">
-        <li>
-          <span>Personalisierte Analyse</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Wissenschaftlich fundiert</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Bluttest inklusive</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Regelmäßige Anpassung</span>
-          <span class="feature-cross">×</span>
-        </li>
-        <li>
-          <span>Transparente Dosierung</span>
-          <span class="feature-check">✓</span>
-        </li>
-      </ul>
+    <div class="comparison-table">
+      <div class="comparison-card featured scroll-reveal">
+        <div class="comparison-header">Vitanua</div>
+        <ul class="comparison-features">
+          <li>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Bluttest inklusive</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Transparente Dosierung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="comparison-card scroll-reveal">
+        <div class="comparison-header">Standard Supplements</div>
+        <ul class="comparison-features">
+          <li>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Bluttest inklusive</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Transparente Dosierung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="comparison-card scroll-reveal">
+        <div class="comparison-header">Apotheke</div>
+        <ul class="comparison-features">
+          <li>
+            <span>Personalisierte Analyse</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Wissenschaftlich fundiert</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Bluttest inklusive</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Regelmäßige Anpassung</span>
+            <div class="feature-cross">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <span>Transparente Dosierung</span>
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="waitlist" class="cta-section">
-  <div class="cta-wrapper">
-    <div class="cta-content">
-      <h2>Sei unter den Ersten</h2>
-      <p>Sichere dir jetzt exklusiven Zugang zur Beta-Version</p>
-      <form id="waitlist-form" class="cta-form">
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Vorname" required>
-          <input type="text" name="lastname" placeholder="Nachname" required>
-        </div>
-        <input type="email" name="email" placeholder="E-Mail-Adresse" required>
-        <button type="submit">Jetzt vormerken</button>
-      </form>
-      <p id="waitlist-success" style="display:none;margin-top:24px;font-weight:700">✓ Perfekt! Du bist jetzt auf der Warteliste.</p>
-    </div>
-    <div class="cta-visual">
-      <img src="images/paper-bag.png" alt="Vitanua Produkt">
+<section id="kontakt" class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-wrapper scroll-reveal">
+      <div class="cta-content">
+        <h3>Sei unter den Ersten.</h3>
+        <p>Trag dich ein und sichere dir den exklusiven Zugang zur Beta-Version & alle News zum Launch.</p>
+        <form id="waitlist-form" class="cta-form">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Vorname" required>
+            <input type="text" name="lastname" placeholder="Nachname" required>
+          </div>
+          <input type="email" name="email" placeholder="E-Mail-Adresse" required>
+          <button type="submit">
+            Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+          </button>
+          <p class="cta-note">
+            Über 1.000 Gesundheitsbegeisterte vertrauen auf intelligente Nährstoffe – sei dabei!
+          </p>
+        </form>
+        <p id="waitlist-success" style="display:none;margin-top:16px;font-weight:600">✓ Danke! Du bist jetzt auf der Warteliste.</p>
+      </div>
+      <div class="cta-visual">
+        <img src="images/paper-bag.png" alt="Vitanua Produkt">
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-links">
-    <a href="datenschutz.html">Datenschutz</a>
-    <a href="impressum.html">Impressum</a>
-    <a href="mailto:info@vitanua.de">Kontakt</a>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:info@vitanua.de">Kontakt</a>
+    </div>
+    <p class="footer-copyright">© 2025 Vitanua. Alle Rechte vorbehalten.</p>
   </div>
-  <p class="footer-copyright">© 2025 Vitanua. Alle Rechte vorbehalten.</p>
 </footer>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Interactive Cursor Effect in Hero
+  const hero = document.getElementById('hero');
+  const heroGradient = hero.querySelector('.hero-gradient');
+  
+  hero.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    heroGradient.style.setProperty('--mouse-x', `${x}px`);
+    heroGradient.style.setProperty('--mouse-y', `${y}px`);
+  });
+
   // Header scroll effect
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
-      header.style.background = 'rgba(255, 255, 255, 0.95)';
+      header.classList.add('scrolled');
     } else {
-      header.style.background = 'rgba(255, 255, 255, 0.9)';
+      header.classList.remove('scrolled');
     }
   });
+
+  // Smooth Scroll reveal animation
+  const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+  
+  const revealOnScroll = () => {
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementTop < windowHeight - 100) {
+        element.classList.add('revealed');
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
 
   // Hamburger menu
   const hamburger = document.getElementById('hamburger');
@@ -1141,6 +1768,23 @@ document.addEventListener('DOMContentLoaded', function() {
       hamburger.classList.remove('active');
       mainNav.classList.remove('show');
     });
+  });
+
+  // Accordion functionality
+  const accordionTrigger = document.getElementById('accordionTrigger');
+  const accordionContent = document.getElementById('accordionContent');
+  let isOpen = false;
+
+  accordionTrigger.addEventListener('click', function() {
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      accordionTrigger.classList.add('active');
+      accordionContent.classList.add('open');
+    } else {
+      accordionTrigger.classList.remove('active');
+      accordionContent.classList.remove('open');
+    }
   });
 
   // Form submission
@@ -1176,6 +1820,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         body: JSON.stringify(data)
       });
+
+      const result = await response.json();
 
       if (response.ok) {
         this.reset();
