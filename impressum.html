@@ -3,68 +3,544 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vitanua — Personalisierte Gesundheit</title>
+  <title>Impressum – Vitanua</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <!-- AOS CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    @font-face {
+      font-family: 'Nexa Heavy';
+      src: url('fonts/nexa-heavy.woff') format('woff');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --purple-primary: #7c3aed;
+      --purple-light: #9b6df0;
+      --purple-dark: #6b3bd6;
+      --purple-subtle: #f3f0ff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --dark-gray: #1e293b;
+      --darker-gray: #0f172a;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --maxw: 1200px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    .header-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo img {
+      width: 36px;
+      height: 36px;
+      transition: transform 0.4s ease;
+    }
+
+    .brand:hover .logo img {
+      transform: rotate(10deg) scale(1.05);
+    }
+
+    .brand-name {
+      font-family: 'Nexa Heavy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      color: #000000;
+      letter-spacing: 0.5px;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--text-primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .main-nav .btn {
+      background: var(--darker-gray);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .main-nav .btn:hover {
+      background: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Content Section */
+    .content-section {
+      padding: 140px 32px 80px;
+      background: var(--bg-secondary);
+      min-height: 100vh;
+    }
+
+    .content-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .page-label {
+      color: var(--purple-primary);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .page-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .content-card h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .content-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .content-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .content-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-group {
+      background: var(--bg-secondary);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      margin: 24px 0;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .info-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: var(--text-primary);
+      min-width: 120px;
+    }
+
+    .info-value {
+      color: var(--text-secondary);
+    }
+
+    .contact-link {
+      color: var(--purple-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--purple-dark);
+      text-decoration: underline;
+    }
+
+    .disclaimer {
+      background: var(--purple-subtle);
+      border-left: 4px solid var(--purple-primary);
+      padding: 20px 24px;
+      border-radius: var(--radius-sm);
+      margin-top: 32px;
+    }
+
+    .disclaimer p {
+      color: var(--text-primary);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 64px 32px 32px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .footer-copyright {
+      color: var(--text-tertiary);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .main-nav {
+        display: none;
+        position: fixed;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        padding: 32px;
+        flex-direction: column;
+        gap: 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .main-nav.show {
+        display: flex;
+      }
+
+      .content-section {
+        padding: 120px 24px 60px;
+      }
+
+      .content-card {
+        padding: 32px 24px;
+      }
+
+      .page-title {
+        font-size: 32px;
+      }
+
+      .brand-name {
+        font-size: 32px;
+      }
+
+      .info-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .info-label {
+        min-width: auto;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header class="site-header">
-<div class="header-inner">
-  <a href="index.html">
-    <div class="brand">
-      <div class="logo"><img src="images/-09-24-at-2.15.png" alt="headerLogo"></div>
-      <small class="muted">vitanua</small>
-    </div>
-  </a>
-  <nav class="main-nav muted">
-    <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
-    <a href="#kits" class="nav-link">Test-Kits</a>
-    <a href="#_testimonials" class="nav-link">Erfahrungen</a>
-    <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
-    <a href="#kontakt" class="btn" id="open-waitlist">Jetzt vormerken <i class="fa-solid fa-chevron-right"></i></a>
-  </nav>
-</div>
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-name">vitanua</span>
+    </a>
+    <button class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html#so-funktionierts" class="nav-link">So funktioniert's</a>
+      <a href="index.html#kits" class="nav-link">Gesundheitsprofil</a>
+      <a href="index.html#_testimonials" class="nav-link">Erfahrungen</a>
+      <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
+      <a href="index.html#kontakt" class="btn">
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+      </a>
+    </nav>
+  </div>
 </header>
 
+<section class="content-section">
+  <div class="content-inner">
+    <div class="page-header">
+      <div class="page-label">Rechtliches</div>
+      <h1 class="page-title">Impressum</h1>
+      <p class="page-subtitle">
+        Angaben gemäß § 5 TMG
+      </p>
+    </div>
 
-<section class="_content_block">
-  <div class="_container">
-    <h1>vitanua.de</h1>
-  <h2>Felix Schütte</h2>
-  <h3>Landshuter Allee 33</h3>
+    <div class="content-card">
+      <h2>
+        <i class="fa-solid fa-building"></i>
+        Anbieter
+      </h2>
+      
+      <div class="info-group">
+        <div class="info-row">
+          <span class="info-label">Name:</span>
+          <span class="info-value">Felix Schütte</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Adresse:</span>
+          <span class="info-value">Landshuter Allee 33<br>80637 München<br>Deutschland</span>
+        </div>
+      </div>
 
-  <p>Deutschland</p>
-  <p>Angaben gemäß § 5 TMG</p>
+      <h3>
+        <i class="fa-solid fa-envelope"></i>
+        Kontakt
+      </h3>
+      <p>
+        E-Mail: <a href="mailto:info@vitanua.de" class="contact-link">info@vitanua.de</a>
+      </p>
 
-  <p><b>Kontakt</b></p>
-  <p>E-Mail: info@vitanua.de</p>
+      <h3>
+        <i class="fa-solid fa-user-tie"></i>
+        Verantwortlich für den Inhalt
+      </h3>
+      <p>
+        Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br>
+        <strong>Felix Schütte</strong><br>
+        Landshuter Allee 33<br>
+        80637 München<br>
+        Deutschland
+      </p>
 
-  <p><b>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</b></p>
-  <p>Felix Schütte</p>
-  <p>Landshuter Allee 33</p>
-  <p>Deutschland</p>
-
-  <p><b>Hinweis</b></p>
-  <p>Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden.</p>
+      <div class="disclaimer">
+        <p>
+          <strong>Hinweis:</strong> Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. 
+          Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="datenschutz.html" class="nav-link">Datenschutz</a>
-      <a href="impressum.html" class="nav-link">Impressum</a>
-      <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:info@vitanua.de">Kontakt</a>
     </div>
-    <p>© 2025 Vitanua. Alle Rechte vorbehalten.</p>
+    <p class="footer-copyright">© 2025 Vitanua. Alle Rechte vorbehalten.</p>
   </div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mainNav = document.getElementById('mainNav');
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mainNav.classList.toggle('show');
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mainNav.classList.remove('show');
+    });
+  });
+});
+</script>
 
 </body>
 </html>

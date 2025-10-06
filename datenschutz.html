@@ -3,117 +3,725 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vitanua — Personalisierte Gesundheit</title>
+  <title>Datenschutz – Vitanua</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <!-- AOS CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    @font-face {
+      font-family: 'Nexa Heavy';
+      src: url('fonts/nexa-heavy.woff') format('woff');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --purple-primary: #7c3aed;
+      --purple-light: #9b6df0;
+      --purple-dark: #6b3bd6;
+      --purple-subtle: #f3f0ff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --dark-gray: #1e293b;
+      --darker-gray: #0f172a;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --border: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.1);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --maxw: 1200px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    }
+
+    .header-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo img {
+      width: 36px;
+      height: 36px;
+      transition: transform 0.4s ease;
+    }
+
+    .brand:hover .logo img {
+      transform: rotate(10deg) scale(1.05);
+    }
+
+    .brand-name {
+      font-family: 'Nexa Heavy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 800;
+      font-size: 42px;
+      color: #000000;
+      letter-spacing: 0.5px;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--text-primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .main-nav .btn {
+      background: var(--darker-gray);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .main-nav .btn:hover {
+      background: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Content Section */
+    .content-section {
+      padding: 140px 32px 80px;
+      background: var(--bg-secondary);
+      min-height: 100vh;
+    }
+
+    .content-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .page-label {
+      color: var(--purple-primary);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .page-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .section-block {
+      margin-bottom: 48px;
+    }
+
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title i {
+      color: var(--purple-primary);
+      font-size: 22px;
+    }
+
+    .content-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    .content-card p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .content-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .highlight-box {
+      background: var(--purple-subtle);
+      border-left: 4px solid var(--purple-primary);
+      padding: 20px 24px;
+      border-radius: var(--radius-sm);
+      margin: 24px 0;
+    }
+
+    .highlight-box p {
+      color: var(--text-primary);
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .info-box {
+      background: var(--bg-secondary);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      margin: 24px 0;
+      border: 1px solid var(--border);
+    }
+
+    .info-box p {
+      margin-bottom: 12px;
+    }
+
+    .info-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-light));
+      padding: 32px;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      color: white;
+      margin-top: 32px;
+    }
+
+    .contact-box h3 {
+      color: white;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .contact-box p {
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 20px;
+    }
+
+    .contact-link {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      background: rgba(255,255,255,0.2);
+      padding: 12px 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .rights-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+    }
+
+    .rights-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rights-list li:last-child {
+      border-bottom: none;
+    }
+
+    .rights-list strong {
+      color: var(--text-primary);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .warning-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 20px 24px;
+      border-radius: var(--radius-sm);
+      margin: 24px 0;
+    }
+
+    .warning-box p {
+      color: #856404;
+      margin: 0;
+    }
+
+    .last-updated {
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: 14px;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Footer */
+    footer {
+      padding: 64px 32px 32px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .footer-copyright {
+      color: var(--text-tertiary);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .main-nav {
+        display: none;
+        position: fixed;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        padding: 32px;
+        flex-direction: column;
+        gap: 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .main-nav.show {
+        display: flex;
+      }
+
+      .content-section {
+        padding: 120px 24px 60px;
+      }
+
+      .content-card {
+        padding: 32px 24px;
+      }
+
+      .page-title {
+        font-size: 32px;
+      }
+
+      .brand-name {
+        font-size: 32px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html">
-      <div class="brand">
-        <div class="logo">
-          <img src="images/-09-24-at-2.15.png" alt="headerLogo">
-        </div>
-        <small class="muted">vitanua</small>
-      </div>
+    <a href="index.html" class="brand">
+      <span class="brand-name">vitanua</span>
     </a>
-    <!-- Hamburger Button -->
     <button class="hamburger" id="hamburger">
       <span></span>
       <span></span>
       <span></span>
     </button>
-    <nav class="main-nav muted" id="mainNav">
-      <a href="#so-funktionierts" class="nav-link">So funktioniert's</a>
-      <a href="#kits" class="nav-link">Test-Kits</a>
-      <a href="#_testimonials" class="nav-link">Erfahrungen</a>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html#so-funktionierts" class="nav-link">So funktioniert's</a>
+      <a href="index.html#kits" class="nav-link">Gesundheitsprofil</a>
+      <a href="index.html#_testimonials" class="nav-link">Erfahrungen</a>
       <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
-      <a href="#kontakt" class="btn" id="open-waitlist">Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
+      <a href="index.html#kontakt" class="btn">
+        Jetzt vormerken <i class="fa-solid fa-chevron-right"></i>
       </a>
     </nav>
   </div>
 </header>
 
+<section class="content-section">
+  <div class="content-inner">
+    <div class="page-header">
+      <div class="page-label">Rechtliches</div>
+      <h1 class="page-title">Datenschutzerklärung</h1>
+      <p class="page-subtitle">
+        Transparenz über die Verarbeitung Ihrer Daten
+      </p>
+    </div>
 
-<section class="_content_block">
-  <div class="_container">
-    <h1>Verantwortlicher</h1>
-  <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
-  <p>Felix Schütte<br>
-  Landshuter Allee 33<br>
-  80637 München<br>
-  Deutschland</p>
-  <p>Sie erreichen ihn per E-Mail unter info@vitanua.de</p>
+    <div class="content-card">
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-user-shield"></i>
+          Verantwortlicher
+        </h2>
+        <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+        <div class="info-box">
+          <p><strong>Felix Schütte</strong><br>
+          Landshuter Allee 33<br>
+          80637 München<br>
+          Deutschland</p>
+          <p>Sie erreichen ihn per E-Mail unter <a href="mailto:info@vitanua.de" style="color: var(--purple-primary); text-decoration: none; font-weight: 600;">info@vitanua.de</a></p>
+        </div>
+      </div>
 
-  <h2>Bereitstellung der Website und Server-Logfiles</h2>
-  <p>Beim rein informatorischen Besuch unserer Website (ohne Registrierung oder Übermittlung von Informationen) werden durch den Hosting-Provider automatisch einige technische Zugriffsdaten in sogenannten Server-Logfiles erhoben. Zu diesen Daten gehören z. B. Ihre IP-Adresse, Datum und Uhrzeit der Anfrage, die abgerufene Seite/Datei, der Browsertyp und das Betriebssystem.</p>
-  <p>Die Verarbeitung dieser Daten erfolgt, um die Funktionsfähigkeit und Sicherheit der Website sicherzustellen; eine Auswertung zu Marketingzwecken findet nicht statt. In diesen Zwecken liegt auch unser berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO an der Datenverarbeitung.</p>
-  <p>Eine Zusammenführung dieser Server-Daten mit anderen Datenquellen wird nicht vorgenommen. Server-Log-Daten werden nur vorübergehend gespeichert und anschließend gelöscht bzw. anonymisiert, sobald sie für die genannten Zwecke nicht mehr erforderlich sind (in der Regel spätestens nach 14 Tagen).</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-server"></i>
+          Bereitstellung der Website und Server-Logfiles
+        </h2>
+        <p>Beim rein informatorischen Besuch unserer Website (ohne Registrierung oder Übermittlung von Informationen) werden durch den Hosting-Provider automatisch einige technische Zugriffsdaten in sogenannten Server-Logfiles erhoben. Zu diesen Daten gehören z. B. Ihre IP-Adresse, Datum und Uhrzeit der Anfrage, die abgerufene Seite/Datei, der Browsertyp und das Betriebssystem.</p>
+        <p>Die Verarbeitung dieser Daten erfolgt, um die Funktionsfähigkeit und Sicherheit der Website sicherzustellen; eine Auswertung zu Marketingzwecken findet nicht statt. In diesen Zwecken liegt auch unser berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO an der Datenverarbeitung.</p>
+        <p>Eine Zusammenführung dieser Server-Daten mit anderen Datenquellen wird nicht vorgenommen. Server-Log-Daten werden nur vorübergehend gespeichert und anschließend gelöscht bzw. anonymisiert, sobald sie für die genannten Zwecke nicht mehr erforderlich sind (in der Regel spätestens nach 14 Tagen).</p>
+      </div>
 
-  <h2>Wartelisten-Anmeldung und Newsletter-Versand</h2>
-  <p>Auf unserer Website haben Sie die Möglichkeit, sich für unsere Warteliste einzutragen (z. B. um Zugang zur Beta-Version und Neuigkeiten zum Launch von Vitanua zu erhalten). Hierfür erheben wir personenbezogene Daten in dem von Ihnen eingegebenen Umfang, insbesondere Ihren Namen und Ihre E-Mail-Adresse. Die Angabe dieser Daten erfolgt freiwillig, ist jedoch notwendig, um Sie auf die Warteliste zu setzen und Sie entsprechend informieren zu können.</p>
-  <p><strong>Double-Opt-in-Verfahren:</strong> Nachdem Sie sich über das Wartelisten-Formular angemeldet haben, erhalten Sie eine Bestätigungs-E-Mail, in der Sie um die Verifikation Ihrer Anmeldung gebeten werden. Erst nach dieser Bestätigung wird Ihre E-Mail-Adresse aktiv in unseren Verteiler aufgenommen.</p>
-  <p><strong>Zweck und Verwendung:</strong> Wir nutzen die im Rahmen der Warteliste erhobenen Daten ausschließlich, um Ihnen die angeforderten Informationen bereitzustellen – etwa Benachrichtigungen über unseren Produkt-Launch, Einladungen zur Beta-Version oder ähnliche Updates zu Vitanua. Eine anderweitige Nutzung (z. B. für Fremdwerbung) findet nicht statt. Insbesondere versenden wir E-Mails an Sie nur, wenn Sie sich aktiv dafür eingetragen haben und können diese auch jederzeit abbestellen.</p>
-  <p><strong>Rechtsgrundlage:</strong> Die Verarbeitung der im Wartelisten-Formular eingegebenen Daten erfolgt ausschließlich auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Durch das Absenden des Formulars willigen Sie in die Verarbeitung Ihrer angegebenen Daten zu den genannten Zwecken ein. Sie können diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
-  <p><strong>Widerruf und Abmeldung:</strong> Ihre erteilte Einwilligung zur Speicherung und Nutzung Ihrer E-Mail-Adresse für die Warteliste bzw. den Newsletter können Sie jederzeit widerrufen, ohne Angabe von Gründen. Hierfür finden Sie in jeder von uns versendeten E-Mail einen Abmeldelink. Alternativ können Sie uns Ihren Widerruf auch formlos per E-Mail an info@vitanua.de mitteilen. Nach erfolgtem Widerruf werden wir die zu Ihrer Person gespeicherten Daten umgehend löschen bzw. aus dem Verteiler entfernen, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list-check"></i>
+          Wartelisten-Anmeldung und Newsletter-Versand
+        </h2>
+        <p>Auf unserer Website haben Sie die Möglichkeit, sich für unsere Warteliste einzutragen (z. B. um Zugang zur Beta-Version und Neuigkeiten zum Launch von Vitanua zu erhalten). Hierfür erheben wir personenbezogene Daten in dem von Ihnen eingegebenen Umfang, insbesondere Ihren Namen und Ihre E-Mail-Adresse. Die Angabe dieser Daten erfolgt freiwillig, ist jedoch notwendig, um Sie auf die Warteliste zu setzen und Sie entsprechend informieren zu können.</p>
+        
+        <div class="highlight-box">
+          <p><strong>Double-Opt-in-Verfahren:</strong> Nachdem Sie sich über das Wartelisten-Formular angemeldet haben, erhalten Sie eine Bestätigungs-E-Mail, in der Sie um die Verifikation Ihrer Anmeldung gebeten werden. Erst nach dieser Bestätigung wird Ihre E-Mail-Adresse aktiv in unseren Verteiler aufgenommen.</p>
+        </div>
 
-  <h2>Einsatz von Airtable (Auftragsverarbeiter in den USA)</h2>
-  <p>Für die Verwaltung der Warteliste nutzen wir den Dienst Airtable. Anbieter ist Airtable, Inc., 799 Market Street, San Francisco, CA 94103, USA. Die von Ihnen im Wartelisten-Formular eingegebenen Daten (Name, E-Mail-Adresse usw.) werden auf den Servern von Airtable gespeichert und dort für uns organisiert.</p>
-  <p>Airtable agiert hierbei als Auftragsverarbeiter in unserem Auftrag; wir haben mit Airtable einen entsprechenden Vertrag zur Auftragsverarbeitung (AVV) gemäß Art. 28 DSGVO abgeschlossen. Bitte beachten Sie, dass Airtable die Daten auch in den USA verarbeitet, also außerhalb der Europäischen Union. Nach Einschätzung des Europäischen Gerichtshofs besteht in den USA derzeit kein der EU vergleichbares Datenschutzniveau, was mit gewissen Risiken (z. B. dem Zugriff US-amerikanischer Behörden) für die Datenverarbeitung einhergehen kann.</p>
+        <h3>Zweck und Verwendung</h3>
+        <p>Wir nutzen die im Rahmen der Warteliste erhobenen Daten ausschließlich, um Ihnen die angeforderten Informationen bereitzustellen – etwa Benachrichtigungen über unseren Produkt-Launch, Einladungen zur Beta-Version oder ähnliche Updates zu Vitanua. Eine anderweitige Nutzung (z. B. für Fremdwerbung) findet nicht statt. Insbesondere versenden wir E-Mails an Sie nur, wenn Sie sich aktiv dafür eingetragen haben und können diese auch jederzeit abbestellen.</p>
 
-  <h2>Keine Cookies und kein Tracking</h2>
-  <p>Unsere Website verwendet keinerlei Cookies. Wir setzen auch keine Tracking- oder Analyse-Tools von Drittanbietern ein. Es werden folglich keine nutzerbezogenen Profile erstellt und keine Informationen auf Ihrem Endgerät gespeichert, die ein Tracking Ihres Nutzungsverhaltens ermöglichen würden.</p>
-  <p>Sie können unsere Website somit nutzen, ohne dass Cookies oder ähnliche Technologien zum Einsatz kommen. (Hinweis: Da keine Cookies verwendet werden, ist auch kein Cookie-Banner oder Consent-Manager auf unserer Seite erforderlich.)</p>
+        <h3>Rechtsgrundlage</h3>
+        <p>Die Verarbeitung der im Wartelisten-Formular eingegebenen Daten erfolgt ausschließlich auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Durch das Absenden des Formulars willigen Sie in die Verarbeitung Ihrer angegebenen Daten zu den genannten Zwecken ein. Sie können diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
 
-  <h2>Datensicherheit (TLS-Verschlüsselung)</h2>
-  <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte – etwa Anfragen, die Sie an uns als Seitenbetreiber senden – eine SSL-/TLS-Verschlüsselung. Sie erkennen eine verschlüsselte Verbindung daran, dass die Adresszeile Ihres Browsers von "http://" auf "https://" wechselt und ein Schloss-Symbol in der Browserzeile erscheint.</p>
-  <p>Wenn die TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden. Wir empfehlen Ihnen aus Gründen der Datensicherheit, stets auf eine verschlüsselte Verbindung zu achten, wenn Sie persönliche Informationen übermitteln.</p>
+        <h3>Widerruf und Abmeldung</h3>
+        <p>Ihre erteilte Einwilligung zur Speicherung und Nutzung Ihrer E-Mail-Adresse für die Warteliste bzw. den Newsletter können Sie jederzeit widerrufen, ohne Angabe von Gründen. Hierfür finden Sie in jeder von uns versendeten E-Mail einen Abmeldelink. Alternativ können Sie uns Ihren Widerruf auch formlos per E-Mail an info@vitanua.de mitteilen. Nach erfolgtem Widerruf werden wir die zu Ihrer Person gespeicherten Daten umgehend löschen bzw. aus dem Verteiler entfernen, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+      </div>
 
-  <h2>Speicherdauer</h2>
-  <p>Wir speichern personenbezogene Daten grundsätzlich nur so lange, wie es zur Erreichung der jeweiligen Zwecke erforderlich ist oder wir gesetzlich zur Speicherung verpflichtet sind.</p>
-  <p><strong>Warteliste/Newsletter-Daten:</strong> Name, E-Mail bewahren wir nur so lange auf, bis der Zweck erfüllt ist – etwa bis wir Sie über den Launch informiert haben oder Sie Ihre Einwilligung widerrufen und sich von der Warteliste abmelden. Danach werden Ihre Daten aus unserem Wartelisten-Verteiler gelöscht.</p>
-  <p><strong>Server-Logdaten:</strong> werden nur kurzfristig zu technischen Zwecken vorgehalten und spätestens nach einigen Tagen anonymisiert oder gelöscht.</p>
-  <p>Abgesehen von gesetzlichen Aufbewahrungsfristen (z. B. steuer- oder handelsrechtliche Pflichten) werden Daten unverzüglich gelöscht, sobald der Speicherungszweck entfällt.</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-globe"></i>
+          Einsatz von Airtable (Auftragsverarbeiter in den USA)
+        </h2>
+        <p>Für die Verwaltung der Warteliste nutzen wir den Dienst Airtable. Anbieter ist Airtable, Inc., 799 Market Street, San Francisco, CA 94103, USA. Die von Ihnen im Wartelisten-Formular eingegebenen Daten (Name, E-Mail-Adresse usw.) werden auf den Servern von Airtable gespeichert und dort für uns organisiert.</p>
+        <p>Airtable agiert hierbei als Auftragsverarbeiter in unserem Auftrag; wir haben mit Airtable einen entsprechenden Vertrag zur Auftragsverarbeitung (AVV) gemäß Art. 28 DSGVO abgeschlossen.</p>
+        
+        <div class="warning-box">
+          <p><strong>Hinweis:</strong> Bitte beachten Sie, dass Airtable die Daten auch in den USA verarbeitet, also außerhalb der Europäischen Union. Nach Einschätzung des Europäischen Gerichtshofs besteht in den USA derzeit kein der EU vergleichbares Datenschutzniveau, was mit gewissen Risiken (z. B. dem Zugriff US-amerikanischer Behörden) für die Datenverarbeitung einhergehen kann.</p>
+        </div>
+      </div>
 
-  <h2>Weitergabe von Daten an Dritte</h2>
-  <p>Eine Übermittlung Ihrer personenbezogenen Daten an Dritte findet nicht statt, außer in den Fällen, die in dieser Erklärung ausdrücklich genannt sind.</p>
-  <p>Konkret bedeutet dies: Wir geben Ihre Daten nicht an externe Stellen weiter oder verkaufen sie, außer es ist zur Durchführung unserer Dienstleistungen erforderlich oder wir sind gesetzlich dazu verpflichtet. Beispielsweise erfolgt eine Weitergabe an Airtable als unseren Auftragsverarbeiter, wie oben beschrieben. Ansonsten werden Ihre personenbezogenen Daten ohne Ihre ausdrückliche Einwilligung nicht an Dritte weitergegeben.</p>
-  <p>Wir versichern, dass wir alle eingebundenen Dienstleister (wie z. B. Airtable) sorgfältig auswählen und vertraglich zur Einhaltung des Datenschutzes verpflichten. Eine darüber hinausgehende Datenweitergabe an Empfänger außerhalb unseres Unternehmens findet nicht statt.</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-cookie-bite"></i>
+          Keine Cookies und kein Tracking
+        </h2>
+        <p>Unsere Website verwendet keinerlei Cookies. Wir setzen auch keine Tracking- oder Analyse-Tools von Drittanbietern ein. Es werden folglich keine nutzerbezogenen Profile erstellt und keine Informationen auf Ihrem Endgerät gespeichert, die ein Tracking Ihres Nutzungsverhaltens ermöglichen würden.</p>
+        <div class="highlight-box">
+          <p>Sie können unsere Website somit nutzen, ohne dass Cookies oder ähnliche Technologien zum Einsatz kommen. Da keine Cookies verwendet werden, ist auch kein Cookie-Banner oder Consent-Manager auf unserer Seite erforderlich.</p>
+        </div>
+      </div>
 
-  <h2>Rechte der betroffenen Personen</h2>
-  <p>Als von der Datenverarbeitung betroffene Person stehen Ihnen nach der DSGVO die folgenden Rechte zu:</p>
-  <p><strong>Recht auf Auskunft (Art. 15 DSGVO):</strong> Sie haben das Recht, Auskunft über Ihre bei uns gespeicherten personenbezogenen Daten zu erhalten – einschließlich Verarbeitungszweck, Datenkategorien, Empfänger und geplanter Speicherdauer.</p>
-  <p><strong>Recht auf Berichtigung (Art. 16 DSGVO):</strong> Sie können die Berichtigung unrichtiger oder die Vervollständigung unvollständiger personenbezogener Daten, die bei uns gespeichert sind, verlangen.</p>
-  <p><strong>Recht auf Löschung (Art. 17 DSGVO):</strong> Sie haben das Recht, die Löschung Ihrer personenbezogenen Daten zu verlangen, sofern die gesetzlichen Voraussetzungen erfüllt sind.</p>
-  <p><strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO):</strong> Sie können unter bestimmten Voraussetzungen die Einschränkung der Verarbeitung Ihrer Daten verlangen.</p>
-  <p><strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO):</strong> Sie haben das Recht, Ihre personenbezogenen Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten oder an einen anderen Verantwortlichen übertragen zu lassen.</p>
-  <p><strong>Recht auf Widerspruch (Art. 21 DSGVO):</strong> Soweit wir Daten auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) verarbeiten würden, hätten Sie das Recht, Widerspruch einzulegen. (Hinweis: Bei den notwendigen Server-Logfiles ist ein Widerspruch nicht möglich, da die Verarbeitung zwingend erforderlich ist.)</p>
-  <p><strong>Recht auf Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO):</strong> Sie können Ihre Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der Verarbeitung bis zum Widerruf bleibt unberührt.</p>
-  <p><strong>Recht auf Beschwerde (Art. 77 DSGVO):</strong> Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren. In Bayern ist dies z. B. der Bayerische Landesbeauftragte für den Datenschutz.</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-lock"></i>
+          Datensicherheit (TLS-Verschlüsselung)
+        </h2>
+        <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte – etwa Anfragen, die Sie an uns als Seitenbetreiber senden – eine SSL-/TLS-Verschlüsselung. Sie erkennen eine verschlüsselte Verbindung daran, dass die Adresszeile Ihres Browsers von "http://" auf "https://" wechselt und ein Schloss-Symbol in der Browserzeile erscheint.</p>
+        <p>Wenn die TLS-Verschlüsselung aktiviert ist, können die Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden. Wir empfehlen Ihnen aus Gründen der Datensicherheit, stets auf eine verschlüsselte Verbindung zu achten, wenn Sie persönliche Informationen übermitteln.</p>
+      </div>
 
-  <p><strong>Hinweis:</strong> Zur Ausübung Ihrer Rechte können Sie sich jederzeit formlos an uns wenden, z. B. per E-Mail an info@vitanua.de.</p>
-  <p>Stand dieser Datenschutzerklärung: September 2025. Wir behalten uns vor, den Inhalt dieser Datenschutzerklärung anzupassen, um sie bei Bedarf an geänderte Rechtslagen oder tatsächliche Verhältnisse anzupassen. Bitte prüfen Sie daher gelegentlich diese Hinweise, um auf dem aktuellen Stand zu bleiben.</p>
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-clock"></i>
+          Speicherdauer
+        </h2>
+        <p>Wir speichern personenbezogene Daten grundsätzlich nur so lange, wie es zur Erreichung der jeweiligen Zwecke erforderlich ist oder wir gesetzlich zur Speicherung verpflichtet sind.</p>
+        <div class="info-box">
+          <p><strong>Warteliste/Newsletter-Daten:</strong> Name, E-Mail bewahren wir nur so lange auf, bis der Zweck erfüllt ist – etwa bis wir Sie über den Launch informiert haben oder Sie Ihre Einwilligung widerrufen und sich von der Warteliste abmelden. Danach werden Ihre Daten aus unserem Wartelisten-Verteiler gelöscht.</p>
+          <p><strong>Server-Logdaten:</strong> werden nur kurzfristig zu technischen Zwecken vorgehalten und spätestens nach einigen Tagen anonymisiert oder gelöscht.</p>
+        </div>
+        <p>Abgesehen von gesetzlichen Aufbewahrungsfristen (z. B. steuer- oder handelsrechtliche Pflichten) werden Daten unverzüglich gelöscht, sobald der Speicherungszweck entfällt.</p>
+      </div>
 
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-share-nodes"></i>
+          Weitergabe von Daten an Dritte
+        </h2>
+        <p>Eine Übermittlung Ihrer personenbezogenen Daten an Dritte findet nicht statt, außer in den Fällen, die in dieser Erklärung ausdrücklich genannt sind.</p>
+        <p>Konkret bedeutet dies: Wir geben Ihre Daten nicht an externe Stellen weiter oder verkaufen sie, außer es ist zur Durchführung unserer Dienstleistungen erforderlich oder wir sind gesetzlich dazu verpflichtet. Beispielsweise erfolgt eine Weitergabe an Airtable als unseren Auftragsverarbeiter, wie oben beschrieben. Ansonsten werden Ihre personenbezogenen Daten ohne Ihre ausdrückliche Einwilligung nicht an Dritte weitergegeben.</p>
+        <p>Wir versichern, dass wir alle eingebundenen Dienstleister (wie z. B. Airtable) sorgfältig auswählen und vertraglich zur Einhaltung des Datenschutzes verpflichten. Eine darüber hinausgehende Datenweitergabe an Empfänger außerhalb unseres Unternehmens findet nicht statt.</p>
+      </div>
+
+      <div class="section-block">
+        <h2 class="section-title">
+          <i class="fa-solid fa-scale-balanced"></i>
+          Rechte der betroffenen Personen
+        </h2>
+        <p>Als von der Datenverarbeitung betroffene Person stehen Ihnen nach der DSGVO die folgenden Rechte zu:</p>
+        
+        <ul class="rights-list">
+          <li>
+            <strong>Recht auf Auskunft (Art. 15 DSGVO)</strong>
+            Sie haben das Recht, Auskunft über Ihre bei uns gespeicherten personenbezogenen Daten zu erhalten – einschließlich Verarbeitungszweck, Datenkategorien, Empfänger und geplanter Speicherdauer.
+          </li>
+          <li>
+            <strong>Recht auf Berichtigung (Art. 16 DSGVO)</strong>
+            Sie können die Berichtigung unrichtiger oder die Vervollständigung unvollständiger personenbezogener Daten, die bei uns gespeichert sind, verlangen.
+          </li>
+          <li>
+            <strong>Recht auf Löschung (Art. 17 DSGVO)</strong>
+            Sie haben das Recht, die Löschung Ihrer personenbezogenen Daten zu verlangen, sofern die gesetzlichen Voraussetzungen erfüllt sind.
+          </li>
+          <li>
+            <strong>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</strong>
+            Sie können unter bestimmten Voraussetzungen die Einschränkung der Verarbeitung Ihrer Daten verlangen.
+          </li>
+          <li>
+            <strong>Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</strong>
+            Sie haben das Recht, Ihre personenbezogenen Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten oder an einen anderen Verantwortlichen übertragen zu lassen.
+          </li>
+          <li>
+            <strong>Recht auf Widerspruch (Art. 21 DSGVO)</strong>
+            Soweit wir Daten auf Grundlage eines berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO) verarbeiten würden, hätten Sie das Recht, Widerspruch einzulegen. (Hinweis: Bei den notwendigen Server-Logfiles ist ein Widerspruch nicht möglich, da die Verarbeitung zwingend erforderlich ist.)
+          </li>
+          <li>
+            <strong>Recht auf Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO)</strong>
+            Sie können Ihre Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der Verarbeitung bis zum Widerruf bleibt unberührt.
+          </li>
+          <li>
+            <strong>Recht auf Beschwerde (Art. 77 DSGVO)</strong>
+            Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren. In Bayern ist dies z. B. der Bayerische Landesbeauftragte für den Datenschutz.
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-box">
+        <h3>Fragen zum Datenschutz?</h3>
+        <p>Zur Ausübung Ihrer Rechte können Sie sich jederzeit formlos an uns wenden.</p>
+        <a href="mailto:info@vitanua.de" class="contact-link">
+          <i class="fa-solid fa-envelope"></i>
+          info@vitanua.de
+        </a>
+      </div>
+
+      <div class="last-updated">
+        Stand dieser Datenschutzerklärung: September 2025. Wir behalten uns vor, den Inhalt dieser Datenschutzerklärung anzupassen, um sie bei Bedarf an geänderte Rechtslagen oder tatsächliche Verhältnisse anzupassen.
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="datenschutz.html" class="nav-link">Datenschutz</a>
-      <a href="impressum.html" class="nav-link">Impressum</a>
-      <a href="mailto:info@vitanua.de" class="nav-link">Kontakt</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:info@vitanua.de">Kontakt</a>
     </div>
-    <p>© 2025 Vitanua. Alle Rechte vorbehalten.</p>
+    <p class="footer-copyright">© 2025 Vitanua. Alle Rechte vorbehalten.</p>
   </div>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mainNav = document.getElementById('mainNav');
+  
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mainNav.classList.toggle('show');
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mainNav.classList.remove('show');
+    });
+  });
+});
+</script>
 
 </body>
 </html>
